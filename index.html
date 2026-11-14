@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#3b2414">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Classe Chitarra">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<title>Classe chitarra Ignazio Paolicelli</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%B8%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+  --bg1:#2b1a10; --bg2:#0b0705; --card:#1a110b; --testo:#f4e9d6; --accento:#c9a45c;
+  --raggio:14px; --font:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif; --colonne:2; --anteprimaH:1.45;
+  --sans:var(--font);
+  --opChitarra:.55;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:var(--font); color:var(--testo);
+  background:linear-gradient(160deg,var(--bg1),var(--bg2)) fixed;
+  min-height:100vh; padding-bottom:env(safe-area-inset-bottom);
+}
+button,input,select,textarea{font:inherit;color:inherit}
+#sfondoChitarra{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+#sfondoChitarra svg{position:absolute;height:118vh;width:auto;top:-6vh;opacity:var(--opChitarra);
+  filter:drop-shadow(0 20px 40px rgba(0,0,0,.6));transition:all .4s}
+#sfondoChitarra.destra svg{right:-4vh;transform:rotate(16deg)}
+#sfondoChitarra.sinistra svg{left:-4vh;transform:rotate(-16deg)}
+#sfondoChitarra.centro svg{left:50%;transform:translateX(-50%)}
+#sfondoChitarra.spenta{display:none}
+/* modalità banner: chitarra orizzontale dietro il titolo */
+#sfondoChitarra.banner{position:absolute;top:0;left:0;right:0;bottom:auto;height:calc(var(--altBanner,340px) + env(safe-area-inset-top));
+  -webkit-mask-image:linear-gradient(#000 70%,transparent);mask-image:linear-gradient(#000 70%,transparent)}
+#sfondoChitarra.banner svg{height:clamp(560px,165vw,1050px);top:50%;left:34%;
+  transform:translate(-50%,-50%) rotate(-80deg)}
+@media (min-width:700px){ #sfondoChitarra.banner svg{left:42%} }
+#sfondoChitarra.banner:after{background:radial-gradient(ellipse 60% 55% at 50% 45%,color-mix(in srgb,var(--bg2) 55%,transparent),transparent 80%),
+  linear-gradient(transparent 60%,var(--bg1))}
+#sfondoChitarra:after{content:"";position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 30%,transparent 0%,color-mix(in srgb,var(--bg2) 70%,transparent) 100%)}
+header,main,footer{position:relative;z-index:1}
+button{cursor:pointer}
+
+/* ---------- HOME ---------- */
+header{
+  text-align:center; padding:calc(22px + env(safe-area-inset-top)) 16px 14px; position:relative;
+}
+header{padding-top:calc(48px + env(safe-area-inset-top)) !important;padding-bottom:30px !important;min-height:250px}
+header h1{font-size:calc(clamp(1.9rem,8vw,3.4rem) * var(--scT,1)); line-height:1.08; letter-spacing:-.025em; font-weight:700;
+  text-shadow:0 2px 14px rgba(0,0,0,.55); max-width:20ch; margin:0 auto; text-wrap:balance}
+.fregio{display:flex;align-items:center;justify-content:center;gap:12px;margin:14px auto 4px;color:var(--accento);max-width:340px}
+.fregio:before,.fregio:after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--accento))}
+.fregio:after{background:linear-gradient(90deg,var(--accento),transparent)}
+.fregio svg{width:26px;height:26px}
+header h1 .nota{color:var(--accento)}
+#titolo{display:block}
+#nomeTit{display:block;font-size:var(--scN,.5em);font-weight:600;letter-spacing:.16em;text-transform:uppercase;margin-top:.35em;opacity:.92}
+header p{opacity:.85;margin-top:4px;font-size:calc(1.05rem * var(--scS,1));font-weight:500;letter-spacing:-.01em}
+.btnImpost{color:var(--accento);display:flex;align-items:center;justify-content:center;
+  position:absolute; top:calc(12px + env(safe-area-inset-top)); right:12px;
+  width:44px;height:44px;border-radius:50%;font-size:1.2rem;
+  background:rgba(0,0,0,.3); backdrop-filter:blur(6px); border:1px solid color-mix(in srgb,var(--accento) 50%,transparent);
+}
+.btnImpost:active{transform:scale(.92)}
+main{max-width:1100px;margin:0 auto;padding:8px 14px 30px}
+.griglia{display:grid;grid-template-columns:repeat(auto-fill,min(var(--larg,160px),100%));gap:14px;justify-content:center}
+.app{container-type:inline-size}
+.info .nome{font-size:calc(clamp(.8rem,10cqw,1.35rem) * var(--scA,1)) !important}
+.info .descr{font-size:calc(clamp(.66rem,6.2cqw,.85rem) * var(--scA,1)) !important}
+@container (max-width:125px){ .info .descr{display:none} .info .nome .tile{display:none} }
+.zoom{position:absolute;top:calc(12px + env(safe-area-inset-top));left:12px;display:flex;gap:6px;z-index:2}
+.zoom button{width:44px;height:44px;border-radius:50%;font-size:1.5rem;line-height:1;color:var(--accento);
+  background:rgba(0,0,0,.3);backdrop-filter:blur(6px);border:1px solid color-mix(in srgb,var(--accento) 50%,transparent)}
+.zoom button:active{transform:scale(.9)}
+.zoom button{display:flex;align-items:center;justify-content:center}
+#barraOrdina{display:none;position:fixed;left:50%;transform:translateX(-50%);bottom:calc(18px + env(safe-area-inset-bottom));z-index:40;
+  background:#fff;color:#2b1a3a;border-radius:30px;padding:8px 8px 8px 18px;gap:12px;align-items:center;
+  font-family:var(--font);font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.45);white-space:nowrap}
+#barraOrdina button{border:none;border-radius:22px;padding:10px 16px;background:#2ed15f;color:#fff;font-weight:700}
+body.ordina #barraOrdina{display:flex}
+body.ordina .app{touch-action:none;animation:trema .3s ease-in-out infinite alternate;cursor:grab}
+body.ordina .app:nth-child(2n){animation-delay:-.15s}
+body.ordina .app iframe{display:none}
+body.ordina .app.presa{animation:none;opacity:.9;z-index:5;cursor:grabbing;box-shadow:0 18px 30px rgba(0,0,0,.5)}
+@keyframes trema{from{transform:rotate(-1.6deg)}to{transform:rotate(1.6deg)}}
+.app{
+  background:var(--card); background:color-mix(in srgb,var(--card) 72%,transparent);
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  border-radius:var(--raggio); overflow:hidden; position:relative;
+  box-shadow:0 10px 30px rgba(0,0,0,.45);
+  transition:transform .15s, border-color .15s; display:flex; flex-direction:column;
+  text-align:left; padding:0; width:100%;
+  border:1px solid color-mix(in srgb,var(--accento) 35%,transparent);
+}
+.app:active{transform:scale(.97)}
+.app:hover{border-color:var(--accento)}
+.anteprima{
+  position:relative; width:100%; aspect-ratio:1/var(--anteprimaH); overflow:hidden;
+  background:var(--card);
+  background:radial-gradient(circle at 30% 25%,color-mix(in srgb,var(--colApp) 45%,var(--card)),color-mix(in srgb,var(--colApp) 12%,var(--card)));
+}
+.anteprima iframe{
+  position:absolute; top:0; left:0; width:400px; height:calc(400px * var(--anteprimaH));
+  border:0; transform-origin:0 0; transform:scale(var(--scala,.4)); pointer-events:none; background:#fff;
+}
+.tile{
+  display:inline-flex;align-items:center;justify-content:center;flex:none;color:#fff;
+  background:var(--colApp);
+  background:linear-gradient(145deg,color-mix(in srgb,var(--colApp) 78%,#fff),color-mix(in srgb,var(--colApp) 82%,#000));
+  border-radius:26%; box-shadow:0 4px 12px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.35);
+}
+.tile svg{width:64%;height:64%;display:block}
+.tile .emo{font-size:1em;line-height:1}
+body.stile-cerchio .tile{border-radius:50%}
+.tile{position:relative;overflow:hidden}
+body.stile-allegra .tile, .tile.allegra{
+  background:linear-gradient(150deg,color-mix(in srgb,var(--colApp) 55%,#fff) 0%,var(--colApp) 55%,color-mix(in srgb,var(--colApp) 80%,#000) 100%);
+  border-radius:30%; box-shadow:0 6px 14px rgba(0,0,0,.35), inset 0 -3px 0 rgba(0,0,0,.18), inset 0 2px 0 rgba(255,255,255,.45)}
+body.stile-allegra .tile:after, .tile.allegra:after{content:"";position:absolute;left:8%;right:8%;top:5%;height:38%;border-radius:50%;
+  background:linear-gradient(rgba(255,255,255,.38),rgba(255,255,255,0));pointer-events:none}
+.tile svg.colorata{width:80%;height:80%;filter:drop-shadow(0 2px 2px rgba(0,0,0,.25))}
+body.stile-allegra .app:hover .anteprima .tile{transform:rotate(-6deg) scale(1.06)}
+.anteprima .tile{transition:transform .25s}
+/* ===== Riquadri ALLEGRI ===== */
+body.stile-allegra .app{
+  background:linear-gradient(165deg,color-mix(in srgb,var(--colApp) 45%,#fff) 0%,var(--colApp) 70%);
+  border:3px solid rgba(255,255,255,.85); border-radius:calc(var(--raggio) + 12px);
+  box-shadow:0 7px 0 color-mix(in srgb,var(--colApp) 60%,#000), 0 12px 22px rgba(0,0,0,.35);
+  -webkit-backdrop-filter:none; backdrop-filter:none; margin-bottom:7px; color:#fff;
+  transition:transform .12s, box-shadow .12s}
+body.stile-allegra .app:active{transform:translateY(5px);box-shadow:0 2px 0 color-mix(in srgb,var(--colApp) 60%,#000),0 4px 10px rgba(0,0,0,.3)}
+body.stile-allegra .app:hover{border-color:#fff}
+body.stile-allegra .anteprima{background:none;aspect-ratio:auto;height:auto;padding:10% 0 0}
+body.stile-allegra .anteprima .velo{display:none}
+body.stile-allegra .anteprima .segnaposto{position:relative;inset:auto}
+body.stile-allegra .anteprima .segnaposto .tile{width:72%;background:none;box-shadow:none;border-radius:0;aspect-ratio:1;
+  animation:dondola 3s ease-in-out infinite}
+body.stile-allegra .anteprima .segnaposto .tile:after{display:none}
+body.stile-allegra .app:nth-child(2n) .tile{animation-delay:-1.5s}
+body.stile-allegra .tile svg.colorata{width:100%;height:100%;filter:drop-shadow(0 4px 3px rgba(0,0,0,.28))}
+@keyframes dondola{0%,100%{transform:rotate(-4deg) translateY(0)}50%{transform:rotate(4deg) translateY(-4px)}}
+body.stile-allegra .anteprima.live{aspect-ratio:1/var(--anteprimaH);margin:8px 8px 0;width:auto;border-radius:16px;overflow:hidden;padding:0;border:2px solid rgba(255,255,255,.8)}
+body.stile-allegra .anteprima.live .segnaposto{position:absolute;inset:0}
+body.stile-allegra .info{border-top:none;text-align:center;padding:6px 8px 12px}
+body.stile-allegra .info .nome{justify-content:center;font-family:var(--font);font-weight:700;letter-spacing:-.01em;
+  color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.25)}
+body.stile-allegra .info .nome .tile{display:none}
+body.stile-allegra .anteprima.live + .info .nome .tile{display:inline-flex;width:26px;height:26px;background:none;box-shadow:none}
+body.stile-allegra .anteprima.live + .info .nome .tile:after{display:none}
+body.stile-allegra .info .descr{color:#fff;opacity:.92;font-weight:700}
+@media (prefers-reduced-motion:reduce){ body.stile-allegra .anteprima .segnaposto .tile{animation:none} }
+body.stile-linea .tile{background:none;box-shadow:none;color:var(--colApp)}
+body.stile-linea .tile svg{width:92%;height:92%}
+.logo{width:64px;height:64px;margin:0 auto 10px;--colApp:var(--accento);font-size:30px}
+.anteprima .segnaposto .tile{width:56%;aspect-ratio:1;font-size:clamp(2.4rem,11vw,4.5rem)}
+.info .tile{width:30px;height:30px;font-size:18px}
+.anteprima .segnaposto{
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  font-size:clamp(3rem,14vw,5.5rem);
+}
+.anteprima .velo{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 55%,rgba(0,0,0,.55))}
+.info{padding:10px 12px 12px; border-top:1px solid color-mix(in srgb,var(--accento) 35%,transparent)}
+.info .nome{font-weight:700;font-size:1.22rem;letter-spacing:-.01em;display:flex;gap:9px;align-items:center;line-height:1.1}
+.info .descr{font-family:var(--sans);font-size:.78rem;opacity:.72;margin-top:5px;line-height:1.35}
+.vuoto{text-align:center;opacity:.7;padding:40px}
+footer{text-align:center;opacity:.7;font-size:.95rem;padding:14px 0 26px;letter-spacing:.04em;margin:10px auto 0;max-width:420px;border-top:1px solid color-mix(in srgb,var(--accento) 30%,transparent)}
+
+/* ---------- VISORE APP ---------- */
+#visore{position:fixed;inset:0;z-index:50;background:var(--bg2);display:none;flex-direction:column}
+#visore.aperto{display:flex}
+.barraVisore{
+  display:flex;align-items:center;gap:8px;padding:calc(6px + env(safe-area-inset-top)) 8px 6px;
+  background:var(--card); border-bottom:3px solid var(--accento);
+}
+.barraVisore button{
+  border:none;background:rgba(255,255,255,.12);border-radius:12px;height:40px;min-width:40px;
+  padding:0 12px;font-size:1rem;
+}
+.barraVisore .titolo{flex:1;font-weight:700;font-size:1.2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#frameApp{flex:1;width:100%;border:0;background:#fff}
+#caricamento{position:absolute;left:0;right:0;top:calc(56px + env(safe-area-inset-top));height:3px;
+  background:var(--accento);animation:carica 1.2s infinite ease-in-out;display:none}
+@keyframes carica{0%{transform:scaleX(0);transform-origin:left}50%{transform:scaleX(1);transform-origin:left}
+  51%{transform-origin:right}100%{transform:scaleX(0);transform-origin:right}}
+
+/* ---------- PANNELLO IMPOSTAZIONI ---------- */
+#pannello{position:fixed;inset:0;z-index:60;display:none}
+#pannello.aperto{display:block}
+#pannello .sfondo{position:absolute;inset:0;background:rgba(0,0,0,.55)}
+#pannello .contenuto{
+  position:absolute;right:0;top:0;bottom:0;width:min(440px,100%);overflow-y:auto;
+  background:#1d1d22;color:#f2f2f2;font-family:var(--font);
+  padding:calc(14px + env(safe-area-inset-top)) 16px calc(30px + env(safe-area-inset-bottom));
+}
+.contenuto h2{font-size:1.25rem;display:flex;justify-content:space-between;align-items:center}
+.contenuto h3{font-size:.95rem;margin:20px 0 8px;color:#ffc46b;text-transform:uppercase;letter-spacing:1px}
+.riga{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:8px 0}
+.riga label{flex:1;font-size:.95rem}
+.riga label.toggle{flex:none}
+.contenuto input[type=text],.contenuto input[type=url],.contenuto select,.contenuto textarea{
+  width:100%;background:#2c2c33;border:1px solid #444;border-radius:10px;padding:9px 10px;color:#fff
+}
+.contenuto input[type=color]{width:52px;height:36px;border:none;background:none;padding:0}
+.contenuto input[type=range]{flex:1}
+.btn{border:none;border-radius:10px;padding:10px 14px;background:#3a3a44;color:#fff;font-size:.92rem}
+.btn.primario{background:#e8952b;color:#1a1a1a;font-weight:bold}
+.btn.pericolo{background:#8b2b2b}
+.btn.piccolo{padding:6px 10px;font-size:.85rem}
+.chiudi{border:none;background:#3a3a44;width:40px;height:40px;border-radius:50%;font-size:1.1rem}
+.temi{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tema{border:2px solid transparent;border-radius:12px;padding:10px 4px;font-size:.8rem;color:#fff;text-shadow:0 1px 3px #000}
+.tema:active{transform:scale(.95)}
+.schedaApp{background:#2a2a31;border-radius:12px;padding:10px;margin:10px 0;border-left:6px solid var(--c)}
+.schedaApp .testa{display:flex;align-items:center;gap:6px}
+.schedaApp .testa .sceltaIcona{border:none;background:none;padding:0;width:44px;height:44px;flex:none}
+.schedaApp .testa .sceltaIcona .tile{width:44px;height:44px;font-size:24px}
+.galleria{display:none;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:8px;background:#1d1d22;padding:8px;border-radius:10px}
+.galleria.aperta{display:grid}
+.galleria button{border:2px solid transparent;background:none;padding:0;aspect-ratio:1;border-radius:12px}
+.galleria button.sel{border-color:#ffc46b}
+.galleria .tile{width:100%;height:100%;font-size:20px}
+.galleria .riga-emoji{grid-column:1/-1;display:flex;gap:6px;align-items:center;font-size:.85rem}
+.galleria .riga-emoji input{flex:1}
+.stili{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.stili button{background:#2c2c33;border:2px solid transparent;border-radius:12px;padding:8px 4px;font-size:.8rem;color:#fff;display:flex;flex-direction:column;align-items:center;gap:6px}
+.stili button.sel{border-color:#ffc46b}
+.stili .tile{width:40px;height:40px;--colApp:#e5533d}
+.schedaApp .testa input.nomeApp{flex:1}
+.schedaApp .campi{display:grid;gap:6px;margin-top:8px}
+.schedaApp .azioni{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;align-items:center}
+.schedaApp.nascosta{opacity:.5}
+.toggle{position:relative;width:50px;height:28px;flex:none}
+.toggle input{opacity:0;width:0;height:0}
+.toggle span{position:absolute;inset:0;background:#555;border-radius:28px;transition:.2s}
+.toggle span:before{content:"";position:absolute;width:22px;height:22px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}
+.toggle input:checked+span{background:#e8952b}
+.toggle input:checked+span:before{transform:translateX(22px)}
+.nota-p{font-size:.8rem;opacity:.65;margin-top:4px;line-height:1.35}
+#avviso{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(120px);
+  background:#222;color:#fff;padding:10px 18px;border-radius:20px;z-index:99;transition:.3s;white-space:nowrap;pointer-events:none;font-family:var(--font);font-size:.9rem}
+#avviso.vedi{transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<div id="sfondoChitarra" class="banner"><svg viewBox="0 0 400 1100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<defs>
+ <linearGradient id="abete" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#f0d39d"/><stop offset=".5" stop-color="#ddb072"/><stop offset="1" stop-color="#b98142"/></linearGradient>
+ <radialGradient id="ombraTavola" cx="50%" cy="55%" r="60%">
+  <stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#3a1d08" stop-opacity=".55"/></radialGradient>
+ <radialGradient id="lucido" cx="32%" cy="28%" r="45%">
+  <stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+ <linearGradient id="ebano" x1="0" x2="1"><stop offset="0" stop-color="#120b07"/><stop offset=".5" stop-color="#2a1a10"/><stop offset="1" stop-color="#120b07"/></linearGradient>
+ <linearGradient id="mogano" x1="0" x2="1"><stop offset="0" stop-color="#4a250f"/><stop offset=".5" stop-color="#8a4f26"/><stop offset="1" stop-color="#4a250f"/></linearGradient>
+ <linearGradient id="palissandro" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5a2f18"/><stop offset="1" stop-color="#2a140a"/></linearGradient>
+ <radialGradient id="avorio" cx="40%" cy="35%"><stop offset="0" stop-color="#fffaf0"/><stop offset="1" stop-color="#d8c9a6"/></radialGradient>
+ <clipPath id="clipCorpo"><path d="M200 520 C262 518 338 548 340 628 C342 692 304 716 309 766 C314 816 384 842 382 936 C379 1032 300 1082 200 1082 C100 1082 21 1032 18 936 C16 842 86 816 91 766 C96 716 58 692 60 628 C62 548 138 518 200 520 Z"/></clipPath>
+</defs>
+<!-- ombra -->
+<path d="M200 520 C262 518 338 548 340 628 C342 692 304 716 309 766 C314 816 384 842 382 936 C379 1032 300 1082 200 1082 C100 1082 21 1032 18 936 C16 842 86 816 91 766 C96 716 58 692 60 628 C62 548 138 518 200 520 Z" transform="translate(10 14)" fill="#000" opacity=".35"/>
+<!-- fasce / bordo -->
+<path d="M200 520 C262 518 338 548 340 628 C342 692 304 716 309 766 C314 816 384 842 382 936 C379 1032 300 1082 200 1082 C100 1082 21 1032 18 936 C16 842 86 816 91 766 C96 716 58 692 60 628 C62 548 138 518 200 520 Z" fill="#4a2210" stroke="#2a1206" stroke-width="10"/>
+<!-- tavola armonica -->
+<path d="M200 520 C262 518 338 548 340 628 C342 692 304 716 309 766 C314 816 384 842 382 936 C379 1032 300 1082 200 1082 C100 1082 21 1032 18 936 C16 842 86 816 91 766 C96 716 58 692 60 628 C62 548 138 518 200 520 Z" fill="url(#abete)" transform="translate(200 800) scale(.975) translate(-200 -800)"/>
+<g clip-path="url(#clipCorpo)" stroke="#8a5a2a" stroke-width="1" opacity=".16"><line x1="14" y1="500" x2="17" y2="1090"/><line x1="23" y1="500" x2="26" y2="1090"/><line x1="32" y1="500" x2="35" y2="1090"/><line x1="41" y1="500" x2="44" y2="1090"/><line x1="50" y1="500" x2="53" y2="1090"/><line x1="59" y1="500" x2="62" y2="1090"/><line x1="68" y1="500" x2="71" y2="1090"/><line x1="77" y1="500" x2="80" y2="1090"/><line x1="86" y1="500" x2="89" y2="1090"/><line x1="95" y1="500" x2="98" y2="1090"/><line x1="104" y1="500" x2="107" y2="1090"/><line x1="113" y1="500" x2="116" y2="1090"/><line x1="122" y1="500" x2="125" y2="1090"/><line x1="131" y1="500" x2="134" y2="1090"/><line x1="140" y1="500" x2="143" y2="1090"/><line x1="149" y1="500" x2="152" y2="1090"/><line x1="158" y1="500" x2="161" y2="1090"/><line x1="167" y1="500" x2="170" y2="1090"/><line x1="176" y1="500" x2="179" y2="1090"/><line x1="185" y1="500" x2="188" y2="1090"/><line x1="194" y1="500" x2="197" y2="1090"/><line x1="203" y1="500" x2="206" y2="1090"/><line x1="212" y1="500" x2="215" y2="1090"/><line x1="221" y1="500" x2="224" y2="1090"/><line x1="230" y1="500" x2="233" y2="1090"/><line x1="239" y1="500" x2="242" y2="1090"/><line x1="248" y1="500" x2="251" y2="1090"/><line x1="257" y1="500" x2="260" y2="1090"/><line x1="266" y1="500" x2="269" y2="1090"/><line x1="275" y1="500" x2="278" y2="1090"/><line x1="284" y1="500" x2="287" y2="1090"/><line x1="293" y1="500" x2="296" y2="1090"/><line x1="302" y1="500" x2="305" y2="1090"/><line x1="311" y1="500" x2="314" y2="1090"/><line x1="320" y1="500" x2="323" y2="1090"/><line x1="329" y1="500" x2="332" y2="1090"/><line x1="338" y1="500" x2="341" y2="1090"/><line x1="347" y1="500" x2="350" y2="1090"/><line x1="356" y1="500" x2="359" y2="1090"/><line x1="365" y1="500" x2="368" y2="1090"/><line x1="374" y1="500" x2="377" y2="1090"/><line x1="383" y1="500" x2="386" y2="1090"/></g>
+<path d="M200 520 C262 518 338 548 340 628 C342 692 304 716 309 766 C314 816 384 842 382 936 C379 1032 300 1082 200 1082 C100 1082 21 1032 18 936 C16 842 86 816 91 766 C96 716 58 692 60 628 C62 548 138 518 200 520 Z" fill="url(#ombraTavola)"/>
+<!-- filetti -->
+<path d="M200 520 C262 518 338 548 340 628 C342 692 304 716 309 766 C314 816 384 842 382 936 C379 1032 300 1082 200 1082 C100 1082 21 1032 18 936 C16 842 86 816 91 766 C96 716 58 692 60 628 C62 548 138 518 200 520 Z" fill="none" stroke="#2a1206" stroke-width="2" transform="translate(200 800) scale(.955) translate(-200 -800)"/>
+<path d="M200 520 C262 518 338 548 340 628 C342 692 304 716 309 766 C314 816 384 842 382 936 C379 1032 300 1082 200 1082 C100 1082 21 1032 18 936 C16 842 86 816 91 766 C96 716 58 692 60 628 C62 548 138 518 200 520 Z" fill="none" stroke="#e9d7b0" stroke-width="1.5" stroke-dasharray="3 3" transform="translate(200 800) scale(.945) translate(-200 -800)"/>
+<!-- rosetta -->
+<circle cx="200" cy="690" r="80" fill="none" stroke="#2a1206" stroke-width="2"/>
+<circle cx="200" cy="690" r="74" fill="none" stroke="#7a3d18" stroke-width="6"/>
+<circle cx="200" cy="690" r="68" fill="none" stroke="#1f5a3a" stroke-width="5" stroke-dasharray="4 3"/>
+<circle cx="200" cy="690" r="68" fill="none" stroke="#c7953e" stroke-width="2" stroke-dasharray="2 5"/>
+<circle cx="200" cy="690" r="63" fill="none" stroke="#7a3d18" stroke-width="4"/>
+<circle cx="200" cy="690" r="59" fill="none" stroke="#2a1206" stroke-width="2"/>
+<circle cx="200" cy="690" r="54" fill="#0e0704"/>
+<!-- manico -->
+<path d="M170 140 L230 140 L236 528 L164 528 Z" fill="url(#mogano)"/>
+<!-- tastiera -->
+<path d="M174 150 L226 150 L232 632 L168 632 Z" fill="url(#ebano)"/>
+<g stroke="#cfcfcf" stroke-width="2.2"><line x1="173.5" y1="191.5" x2="226.5" y2="191.5"/><line x1="173.0" y1="230.7" x2="227.0" y2="230.7"/><line x1="172.5" y1="267.7" x2="227.5" y2="267.7"/><line x1="172.1" y1="302.7" x2="227.9" y2="302.7"/><line x1="171.7" y1="335.6" x2="228.3" y2="335.6"/><line x1="171.3" y1="366.7" x2="228.7" y2="366.7"/><line x1="170.9" y1="396.1" x2="229.1" y2="396.1"/><line x1="170.6" y1="423.8" x2="229.4" y2="423.8"/><line x1="170.3" y1="450.0" x2="229.7" y2="450.0"/><line x1="170.0" y1="474.7" x2="230.0" y2="474.7"/><line x1="169.7" y1="498.0" x2="230.3" y2="498.0"/><line x1="169.4" y1="520.0" x2="230.6" y2="520.0"/><line x1="169.1" y1="540.8" x2="230.9" y2="540.8"/><line x1="168.9" y1="560.4" x2="231.1" y2="560.4"/><line x1="168.7" y1="578.9" x2="231.3" y2="578.9"/><line x1="168.4" y1="596.3" x2="231.6" y2="596.3"/><line x1="168.2" y1="612.8" x2="231.8" y2="612.8"/></g>
+<!-- capotasto -->
+<rect x="172" y="145" width="56" height="7" rx="1.5" fill="#efe6d2"/>
+<!-- paletta con fessure -->
+<path d="M168 146 L158 16 Q178 4 200 12 Q222 4 242 16 L232 146 Z" fill="url(#palissandro)" stroke="#1a0b04" stroke-width="2"/>
+<path d="M176 30 L180 128 L188 128 L186 30 Z M224 30 L220 128 L212 128 L214 30 Z" fill="#0a0503"/>
+<rect x="160" y="28" width="9" height="96" fill="#b8913e"/><rect x="231" y="28" width="9" height="96" fill="#b8913e"/>
+<ellipse cx="146" cy="42" rx="13" ry="8" fill="url(#avorio)"/><rect x="157" y="39" width="12" height="6" fill="#b8913e"/><ellipse cx="254" cy="42" rx="13" ry="8" fill="url(#avorio)"/><rect x="231" y="39" width="12" height="6" fill="#b8913e"/><rect x="178" y="38" width="44" height="8" rx="4" fill="#e9dcc0" opacity=".9"/><ellipse cx="146" cy="74" rx="13" ry="8" fill="url(#avorio)"/><rect x="157" y="71" width="12" height="6" fill="#b8913e"/><ellipse cx="254" cy="74" rx="13" ry="8" fill="url(#avorio)"/><rect x="231" y="71" width="12" height="6" fill="#b8913e"/><rect x="178" y="70" width="44" height="8" rx="4" fill="#e9dcc0" opacity=".9"/><ellipse cx="146" cy="106" rx="13" ry="8" fill="url(#avorio)"/><rect x="157" y="103" width="12" height="6" fill="#b8913e"/><ellipse cx="254" cy="106" rx="13" ry="8" fill="url(#avorio)"/><rect x="231" y="103" width="12" height="6" fill="#b8913e"/><rect x="178" y="102" width="44" height="8" rx="4" fill="#e9dcc0" opacity=".9"/>
+<!-- ponte con legatura -->
+<rect x="118" y="878" width="164" height="40" rx="8" fill="url(#palissandro)" stroke="#1a0b04" stroke-width="2"/>
+<rect x="128" y="886" width="144" height="6" rx="3" fill="#efe6d2"/>
+<rect x="166" y="900" width="68" height="14" rx="3" fill="#7a3d18"/>
+<g stroke="#2a1206" stroke-width="1.5"><line x1="172" y1="902" x2="172" y2="912"/><line x1="183" y1="902" x2="183" y2="912"/><line x1="194" y1="902" x2="194" y2="912"/><line x1="205" y1="902" x2="205" y2="912"/><line x1="216" y1="902" x2="216" y2="912"/><line x1="227" y1="902" x2="227" y2="912"/></g>
+<!-- corde -->
+<g opacity=".95"><line x1="180" y1="150" x2="176.0" y2="905" stroke="#f3ede2" stroke-width="2.5"/><line x1="188" y1="150" x2="185.6" y2="905" stroke="#f3ede2" stroke-width="2.2"/><line x1="196" y1="150" x2="195.2" y2="905" stroke="#efe7d8" stroke-width="1.9"/><line x1="204" y1="150" x2="204.8" y2="905" stroke="#d9d4ca" stroke-width="1.6"/><line x1="212" y1="150" x2="214.4" y2="905" stroke="#cfc9bd" stroke-width="1.3"/><line x1="220" y1="150" x2="224.0" y2="905" stroke="#c7c0b2" stroke-width="1.1"/></g>
+<!-- lucido -->
+<path d="M200 520 C262 518 338 548 340 628 C342 692 304 716 309 766 C314 816 384 842 382 936 C379 1032 300 1082 200 1082 C100 1082 21 1032 18 936 C16 842 86 816 91 766 C96 716 58 692 60 628 C62 548 138 518 200 520 Z" fill="url(#lucido)"/>
+</svg></div>
+
+<header>
+  <div class="logo tile" id="logo"></div>
+  <h1><span id="titolo"></span><span id="nomeTit"></span></h1>
+  <div class="fregio"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"><ellipse cx="25" cy="47" rx="8" ry="6" transform="rotate(-22 25 47)" fill="currentColor" stroke="none"/><path d="M32 45 V9 Q38 20 48 22" stroke-width="4"/></svg></div>
+  <p id="sottotitolo"></p>
+  <div class="zoom"><button id="zMeno" aria-label="Riquadri più piccoli">−</button><button id="zPiu" aria-label="Riquadri più grandi">+</button><button id="zOrdina" aria-label="Riordina le app" title="Riordina le app"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16M3 8l4-4 4 4M17 20V4M13 16l4 4 4-4"/></svg></button></div>
+  <div id="barraOrdina"><span>Trascina le app per spostarle</span><button id="fineOrdina">Fatto ✓</button></div>
+  <button class="btnImpost" id="apriImpost" aria-label="Personalizza"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+</header>
+
+<main>
+  <div class="griglia" id="griglia"></div>
+</main>
+<footer id="piede">Copyright © Ignazio Paolicelli</footer>
+
+<!-- Visore: apre l'app dentro questa app -->
+<div id="visore">
+  <div class="barraVisore">
+    <button id="indietro" aria-label="Torna alla home">← Home</button>
+    <div class="titolo" id="titoloVisore"></div>
+    <button id="ricarica" aria-label="Ricarica">⟳</button>
+    <a id="esterno" target="_blank" rel="noopener"><button aria-label="Apri a schermo intero">↗</button></a>
+  </div>
+  <div id="caricamento"></div>
+  <iframe id="frameApp" allow="autoplay; fullscreen; microphone; camera; clipboard-write" allowfullscreen></iframe>
+</div>
+
+<!-- Pannello personalizzazione -->
+<div id="pannello">
+  <div class="sfondo" id="sfondoPannello"></div>
+  <div class="contenuto">
+    <h2>Personalizza <button class="chiudi" id="chiudiImpost">✕</button></h2>
+
+    <h3>Testi</h3>
+    <div class="riga"><input type="text" id="inTitolo" placeholder="Titolo"></div>
+    <div class="riga"><input type="text" id="inNome" placeholder="Nome (scritto più piccolo, sotto il titolo)"></div>
+    <div class="riga"><input type="text" id="inSottotitolo" placeholder="Sottotitolo"></div>
+    <div class="riga"><input type="text" id="inPiede" placeholder="Testo in fondo"></div>
+
+    <h3>Grandezza del testo</h3>
+    <div class="riga"><label>Titolo: <b id="vScT"></b></label><input type="range" id="inScT" min="0.5" max="1.6" step="0.05"></div>
+    <div class="riga"><label>Nome (sotto il titolo): <b id="vScN"></b></label><input type="range" id="inScN" min="0.25" max="1" step="0.05"></div>
+    <div class="riga"><label>Sottotitolo: <b id="vScS"></b></label><input type="range" id="inScS" min="0.5" max="1.8" step="0.05"></div>
+    <div class="riga"><label>Nomi delle app: <b id="vScA"></b></label><input type="range" id="inScA" min="0.6" max="1.8" step="0.05"></div>
+
+    <h3>Temi pronti</h3>
+    <div class="temi" id="temi"></div>
+
+    <h3>Colori</h3>
+    <div class="riga"><label>Sfondo (sopra)</label><input type="color" id="cBg1"></div>
+    <div class="riga"><label>Sfondo (sotto)</label><input type="color" id="cBg2"></div>
+    <div class="riga"><label>Riquadri app</label><input type="color" id="cCard"></div>
+    <div class="riga"><label>Testo</label><input type="color" id="cTesto"></div>
+    <div class="riga"><label>Colore principale</label><input type="color" id="cAccento"></div>
+
+    <h3>Chitarra di sfondo</h3>
+    <div class="riga"><label>Mostra la chitarra</label>
+      <label class="toggle"><input type="checkbox" id="inChit"><span></span></label></div>
+    <div class="riga"><label>Posizione</label>
+      <select id="inChitPos" style="width:55%"><option value="banner">In alto, dietro il titolo</option><option value="destra">Sfondo a destra</option><option value="centro">Sfondo al centro</option><option value="sinistra">Sfondo a sinistra</option></select></div>
+    <div class="riga"><label>Visibilità: <b id="vChit"></b></label><input type="range" id="inChitOp" min="0.08" max="1" step="0.02"></div>
+
+    <div class="riga"><label>Logo sopra il titolo</label>
+      <label class="toggle"><input type="checkbox" id="inLogo"><span></span></label></div>
+
+    <h3>Aspetto</h3>
+    <div class="riga"><label>Carattere</label>
+      <select id="inFont" style="width:60%">
+        <option value="-apple-system, BlinkMacSystemFont, &#39;SF Pro Display&#39;, &#39;SF Pro Text&#39;, &#39;Inter&#39;, &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif">Apple (San Francisco)</option>
+        <option value="Georgia, 'Times New Roman', serif">Classico (Georgia)</option>
+        <option value="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">Moderno</option>
+        <option value="'Trebuchet MS', 'Segoe UI', sans-serif">Arrotondato</option>
+        <option value="'Comic Sans MS', 'Comic Neue', 'Chalkboard SE', cursive">Fumetto</option>
+        <option value="'Courier New', Courier, monospace">Macchina da scrivere</option>
+        <option value="'Palatino Linotype', Palatino, 'Book Antiqua', serif">Elegante</option>
+        <option value="Impact, 'Arial Black', sans-serif">Grassetto</option>
+      </select>
+    </div>
+    <div class="riga"><label>Grandezza riquadri: <b id="vCol"></b></label><input type="range" id="inCol" min="90" max="420" step="10"></div>
+    <div class="riga"><label>Arrotondamento: <b id="vRag"></b></label><input type="range" id="inRag" min="0" max="36" step="2"></div>
+    <div class="riga"><label>Altezza anteprima: <b id="vAlt"></b></label><input type="range" id="inAlt" min="0.6" max="2" step="0.05"></div>
+    <div class="riga"><label>Anteprime dal vivo<div class="nota-p">Se il telefono è lento spegnile: resta l'icona.</div></label>
+      <label class="toggle"><input type="checkbox" id="inLive"><span></span></label></div>
+    <div class="riga"><label>Apri le app dentro questa app<div class="nota-p">Spento = si aprono in una nuova scheda.</div></label>
+      <label class="toggle"><input type="checkbox" id="inDentro"><span></span></label></div>
+
+    <h3>Le app</h3>
+    <div id="elencoApp"></div>
+    <button class="btn primario" id="aggiungi" style="width:100%;margin-top:6px">＋ Aggiungi app</button>
+
+    <h3>Salva / ripristina</h3>
+    <div class="nota-p">Le modifiche si salvano da sole su questo dispositivo. Per portarle su un altro dispositivo copia il codice e incollalo lì.</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+      <button class="btn" id="esporta">📋 Copia impostazioni</button>
+      <button class="btn" id="importa">📥 Incolla impostazioni</button>
+      <button class="btn pericolo" id="reset">↺ Ripristina tutto</button>
+    </div>
+    <textarea id="areaCodice" rows="4" style="margin-top:8px;display:none" placeholder="Incolla qui il codice e premi di nuovo 'Incolla impostazioni'"></textarea>
+  </div>
+</div>
+
+<div id="avviso"></div>
+
+<script>
+/* =========================================================
+   Classe chitarra Paolicelli Ignazio
+   Copyright © Ignazio Paolicelli
+   ========================================================= */
+const CHIAVE = 'classeChitarraPaolicelli_v2';
+
+/* Icone disegnate (64x64, a tratto) */
+const ICONE = {
+  metronomo:'<path d="M18 56 L27 11 Q32 6 37 11 L46 56 Z"/><path d="M13 56 H51"/><path d="M23 45 H41"/><path d="M32 45 L45 15"/><circle cx="41.5" cy="23" r="3.5" fill="currentColor" stroke="none"/>',
+  accordi:'<path d="M15 11 H49" stroke-width="5"/><path d="M15 11 V55 M21.8 11 V55 M28.6 11 V55 M35.4 11 V55 M42.2 11 V55 M49 11 V55" stroke-width="2.2"/><path d="M15 22 H49 M15 33 H49 M15 44 H49 M15 55 H49" stroke-width="2.2"/><circle cx="21.8" cy="38.5" r="4" fill="currentColor" stroke="none"/><circle cx="28.6" cy="27.5" r="4" fill="currentColor" stroke="none"/><circle cx="42.2" cy="16.5" r="4" fill="currentColor" stroke="none"/>',
+  aula:'<path d="M5 25 L32 13 L59 25 L32 37 Z"/><path d="M16 30 V42 Q32 52 48 42 V30"/><path d="M54 27 V41"/><circle cx="54" cy="44" r="2.5" fill="currentColor" stroke="none"/>',
+  pentagramma:'<path d="M6 16 H58 M6 24 H58 M6 32 H58 M6 40 H58 M6 48 H58" stroke-width="2"/><ellipse cx="22" cy="44" rx="5.6" ry="4.2" transform="rotate(-22 22 44)" fill="currentColor" stroke="none"/><path d="M27 42.5 V14" stroke-width="3"/><ellipse cx="42" cy="32" rx="5.6" ry="4.2" transform="rotate(-22 42 32)" fill="currentColor" stroke="none"/><path d="M47 30.5 V6" stroke-width="3"/><path d="M27 14 L47 6" stroke-width="4.5"/>',
+  bersaglio:'<circle cx="32" cy="32" r="25"/><circle cx="32" cy="32" r="15.5"/><ellipse cx="29" cy="39" rx="5" ry="3.8" transform="rotate(-22 29 39)" fill="currentColor" stroke="none"/><path d="M33.5 37.5 V22 Q36 27 41 28" stroke-width="3"/>',
+  chitarra:'<g transform="rotate(38 32 32) translate(32 33) scale(.92) translate(-32 -32)"><path d="M32 22 C25 22 22.5 26 23.5 30.5 C24.5 35 19 36 19 45 C19 54 25 60 32 60 C39 60 45 54 45 45 C45 36 39.5 35 40.5 30.5 C41.5 26 39 22 32 22 Z"/><path d="M32 22 V4"/><path d="M29 6 H35"/><circle cx="32" cy="41" r="4.2"/><path d="M27 52 H37"/></g>',
+  spartito:'<path d="M15 6 H41 L50 15 V58 H15 Z"/><path d="M41 6 V15 H50"/><path d="M21 24 H44 M21 30 H44 M21 36 H44 M21 42 H44 M21 48 H44" stroke-width="1.8"/><ellipse cx="28" cy="45" rx="4.2" ry="3.2" transform="rotate(-22 28 45)" fill="currentColor" stroke="none"/><path d="M31.6 44 V25" stroke-width="2.6"/>',
+  nota:'<ellipse cx="25" cy="47" rx="8" ry="6" transform="rotate(-22 25 47)" fill="currentColor" stroke="none"/><path d="M32 45 V9 Q38 20 48 22" stroke-width="4"/>',
+  plettro:'<path d="M32 56 C21 45 12 32 13.5 21 C15 11 49 11 50.5 21 C52 32 43 45 32 56 Z"/><path d="M26 26 Q32 23 38 26"/>',
+  cuffie:'<path d="M12 40 V32 A20 20 0 0 1 52 32 V40"/><rect x="9" y="38" width="10" height="16" rx="4"/><rect x="45" y="38" width="10" height="16" rx="4"/>',
+  microfono:'<rect x="24" y="7" width="16" height="28" rx="8"/><path d="M16 30 A16 16 0 0 0 48 30"/><path d="M32 46 V56 M24 56 H40"/>',
+  libro:'<path d="M32 16 Q22 9 8 12 V52 Q22 49 32 56 Q42 49 56 52 V12 Q42 9 32 16 Z"/><path d="M32 16 V56"/>',
+  video:'<rect x="7" y="13" width="50" height="38" rx="8"/><path d="M27 23 L41 32 L27 41 Z" fill="currentColor"/>',
+  calendario:'<rect x="9" y="13" width="46" height="42" rx="6"/><path d="M9 25 H55 M21 8 V17 M43 8 V17"/><circle cx="22" cy="36" r="2.5" fill="currentColor" stroke="none"/><circle cx="32" cy="36" r="2.5" fill="currentColor" stroke="none"/><circle cx="42" cy="36" r="2.5" fill="currentColor" stroke="none"/><circle cx="22" cy="46" r="2.5" fill="currentColor" stroke="none"/>',
+  orologio:'<circle cx="32" cy="32" r="24"/><path d="M32 18 V32 L42 38"/>',
+  stella:'<path d="M32 8 L39 23 L55 25 L43 36 L46 53 L32 45 L18 53 L21 36 L9 25 L25 23 Z"/>',
+  matita:'<path d="M14 50 L17 38 L42 13 Q46 9 50 13 L51 14 Q55 18 51 22 L26 47 Z"/><path d="M37 18 L46 27 M14 50 L26 47"/>',
+  cartella:'<path d="M7 18 Q7 13 12 13 H25 L30 19 H52 Q57 19 57 24 V48 Q57 53 52 53 H12 Q7 53 7 48 Z"/>',
+  amplificatore:'<rect x="9" y="11" width="46" height="44" rx="6"/><circle cx="32" cy="37" r="11"/><circle cx="32" cy="37" r="3" fill="currentColor" stroke="none"/><path d="M17 19 H23 M30 19 H47"/>',
+  trofeo:'<path d="M20 9 H44 V24 A12 12 0 0 1 20 24 Z"/><path d="M20 14 H11 Q11 26 21 28 M44 14 H53 Q53 26 43 28"/><path d="M32 36 V46 M22 54 H42 M25 54 L27 46 H37 L39 54"/>'
+};
+/* Icone colorate (stile allegro) */
+const ICONE_COLORE = {
+  metronomo:'<path d="M32 50 L46 11" stroke="#2b1a3a" stroke-width="3.2" stroke-linecap="round"/><path d="M17 57 L26.5 9 Q32 3.5 37.5 9 L47 57 Z" fill="#ffb703" stroke="#2b1a3a" stroke-width="3" stroke-linejoin="round"/><path d="M22.5 50 L25.5 32 H38.5 L41.5 50 Z" fill="#fff6d6"/><path d="M33 31 L44.5 11" stroke="#2b1a3a" stroke-width="3" stroke-linecap="round"/><circle cx="42" cy="16" r="5" fill="#ff3d6e" stroke="#2b1a3a" stroke-width="2.2"/><circle cx="28.5" cy="39" r="2.6" fill="#2b1a3a"/><circle cx="35.5" cy="39" r="2.6" fill="#2b1a3a"/><circle cx="29.4" cy="38.1" r="0.99" fill="#fff"/><circle cx="36.4" cy="38.1" r="0.99" fill="#fff"/><ellipse cx="25.5" cy="44" rx="2.6" ry="1.7" fill="#ff7aa8" opacity=".8"/><ellipse cx="38.5" cy="44" rx="2.6" ry="1.7" fill="#ff7aa8" opacity=".8"/><path d="M29 44.5 Q32 48 35 44.5" stroke="#2b1a3a" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M11 57 H53" stroke="#2b1a3a" stroke-width="4.5" stroke-linecap="round"/><path d="M10 10 L11.2 12.8 L14 14 L11.2 15.2 L10 18 L8.8 15.2 L6 14 L8.8 12.8 Z" fill="#fff"/><path d="M54 27 L54.9 29.1 L57 30 L54.9 30.9 L54 33 L53.1 30.9 L51 30 L53.1 29.1 Z" fill="#fff"/>',
+  accordi:'<rect x="13" y="8" width="38" height="49" rx="7" fill="#ffd166" stroke="#2b1a3a" stroke-width="2.8"/><rect x="14.4" y="9.4" width="35.2" height="6" rx="3" fill="#fff"/><g stroke="#b5651d" stroke-width="1.7"><path d="M19 15 V56 M24.2 15 V56 M29.4 15 V56 M34.6 15 V56 M39.8 15 V56 M45 15 V56"/></g><g stroke="#2b1a3a" stroke-width="2" opacity=".55"><path d="M14 26 H50 M14 38 H50 M14 50 H50"/></g><circle cx="45" cy="20.5" r="5.2" fill="#2ec4ff" stroke="#2b1a3a" stroke-width="2"/><circle cx="29.4" cy="32" r="5.2" fill="#ff3d6e" stroke="#2b1a3a" stroke-width="2"/><circle cx="24.2" cy="44" r="5.2" fill="#7bdc3f" stroke="#2b1a3a" stroke-width="2"/><circle cx="27.400000000000002" cy="31.799999999999997" r="1.5" fill="#2b1a3a"/><circle cx="31.400000000000002" cy="30.799999999999997" r="1.5" fill="#2b1a3a"/><path d="M56 6 L57.2 8.8 L60 10 L57.2 11.2 L56 14 L54.8 11.2 L52 10 L54.8 8.8 Z" fill="#fff"/><path d="M7 45 L7.9 47.1 L10 48 L7.9 48.9 L7 51 L6.1 48.9 L4 48 L6.1 47.1 Z" fill="#fff"/>',
+  aula:'<path d="M7 38 Q19 32 32 38 Q45 32 57 38 V58 Q45 52 32 58 Q19 52 7 58 Z" fill="#fff" stroke="#2b1a3a" stroke-width="2.8" stroke-linejoin="round"/><path d="M32 38 V58" stroke="#2b1a3a" stroke-width="2.2"/><circle cx="22" cy="46" r="2.5" fill="#2b1a3a"/><circle cx="42" cy="46" r="2.5" fill="#2b1a3a"/><circle cx="22.9" cy="45.1" r="0.95" fill="#fff"/><circle cx="42.9" cy="45.1" r="0.95" fill="#fff"/><path d="M28 51 Q32 55 36 51" stroke="#2b1a3a" stroke-width="2.2" fill="none" stroke-linecap="round"/><ellipse cx="18" cy="51" rx="2.6" ry="1.7" fill="#ff7aa8" opacity=".8"/><ellipse cx="46" cy="51" rx="2.6" ry="1.7" fill="#ff7aa8" opacity=".8"/><path d="M19 21 V28 Q32 35 45 28 V21 L32 26 Z" fill="#5b3cc4" stroke="#2b1a3a" stroke-width="2.5" stroke-linejoin="round"/><path d="M6 17 L32 6 L58 17 L32 27 Z" fill="#7b5cff" stroke="#2b1a3a" stroke-width="2.5" stroke-linejoin="round"/><path d="M32 17 L51 20 V31" stroke="#ffd23f" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="51" cy="33.5" r="3.6" fill="#ffd23f" stroke="#2b1a3a" stroke-width="1.4"/>',
+  pentagramma:'<g stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M5 18 H59 M5 25 H59 M5 32 H59 M5 39 H59 M5 46 H59"/></g><path d="M27.5 41 V14 L50 7 V30" stroke="#2b1a3a" stroke-width="3.4" fill="none" stroke-linejoin="round"/><path d="M27.5 14 L50 7 V13 L27.5 20 Z" fill="#2b1a3a"/><ellipse cx="21" cy="42.5" rx="7.4" ry="5.6" transform="rotate(-20 21 42.5)" fill="#ffe14d" stroke="#2b1a3a" stroke-width="2.4"/><circle cx="18.8" cy="41.9" r="1.5" fill="#2b1a3a"/><circle cx="22.8" cy="40.9" r="1.5" fill="#2b1a3a"/><ellipse cx="43.5" cy="31.5" rx="7.4" ry="5.6" transform="rotate(-20 43.5 31.5)" fill="#ff5fa2" stroke="#2b1a3a" stroke-width="2.4"/><circle cx="41.3" cy="30.9" r="1.5" fill="#2b1a3a"/><circle cx="45.3" cy="29.9" r="1.5" fill="#2b1a3a"/><path d="M55 46.5 L56.4 49.6 L59.5 51 L56.4 52.4 L55 55.5 L53.6 52.4 L50.5 51 L53.6 49.6 Z" fill="#ffe14d"/><path d="M9 6.5 L10.1 8.9 L12.5 10 L10.1 11.1 L9 13.5 L8.0 11.1 L5.5 10 L8.0 8.9 Z" fill="#fff"/>',
+  bersaglio:'<circle cx="32" cy="33" r="25" fill="#fff" stroke="#2b1a3a" stroke-width="2.8"/><circle cx="32" cy="33" r="19.5" fill="#ff3d6e"/><circle cx="32" cy="33" r="14" fill="#fff"/><circle cx="32" cy="33" r="8.5" fill="#2ec4ff"/><path d="M36.5 39 V20 Q39 26 46 27.5" stroke="#2b1a3a" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="30.5" cy="40.5" rx="7" ry="5.3" transform="rotate(-20 30.5 40.5)" fill="#ffe14d" stroke="#2b1a3a" stroke-width="2.4"/><circle cx="28.3" cy="39.9" r="1.5" fill="#2b1a3a"/><circle cx="32.3" cy="38.9" r="1.5" fill="#2b1a3a"/><path d="M56 4.5 L57.4 7.7 L60.5 9 L57.4 10.3 L56 13.5 L54.6 10.3 L51.5 9 L54.6 7.7 Z" fill="#ffe14d"/><path d="M8 52.5 L9.1 55.0 L11.5 56 L9.1 57.0 L8 59.5 L7.0 57.0 L4.5 56 L7.0 55.0 Z" fill="#fff"/>',
+  spartito:'<path d="M13 5 H40 L51 16 V59 H13 Z" fill="#fff" stroke="#2b1a3a" stroke-width="2.8" stroke-linejoin="round"/><path d="M40 5 V16 H51 Z" fill="#ffd6ec" stroke="#2b1a3a" stroke-width="2.2" stroke-linejoin="round"/><g stroke="#b9b0c9" stroke-width="1.6"><path d="M18 22 H46 M18 27.5 H46 M18 33 H46 M18 38.5 H46 M18 44 H46"/></g><path d="M30.5 41 V23 L42.5 20 V35" stroke="#2b1a3a" stroke-width="2.8" fill="none" stroke-linejoin="round"/><ellipse cx="26" cy="42" rx="5.6" ry="4.2" transform="rotate(-20 26 42)" fill="#ff5fa2" stroke="#2b1a3a" stroke-width="2"/><ellipse cx="38" cy="36" rx="5.6" ry="4.2" transform="rotate(-20 38 36)" fill="#2ec4ff" stroke="#2b1a3a" stroke-width="2"/><path d="M27 52 Q32 56 37 52" stroke="#2b1a3a" stroke-width="2.2" fill="none" stroke-linecap="round"/><ellipse cx="22" cy="52" rx="2.6" ry="1.7" fill="#ff7aa8" opacity=".8"/><ellipse cx="42" cy="52" rx="2.6" ry="1.7" fill="#ff7aa8" opacity=".8"/><path d="M57 44 L58.2 46.8 L61 48 L58.2 49.2 L57 52 L55.8 49.2 L53 48 L55.8 46.8 Z" fill="#ffe14d"/>'
+};
+const ICONE_DEF = { metronomo:'metronomo', accordi:'accordi', aula:'aula', appnote:'pentagramma', caccia:'bersaglio', spartiti:'spartito' };
+const TITOLO_VECCHIO = '🎸 Classe chitarra Paolicelli Ignazio';
+function svgIcona(k){ return `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONE[k]}</svg>`; }
+function svgColore(k){ return `<svg class="colorata" viewBox="0 0 64 64" aria-hidden="true">${ICONE_COLORE[k]}</svg>`; }
+function tile(icona, colore, cls, stile){
+  const st = stile || (typeof cfg!=='undefined' ? cfg.stileIcone : 'allegra');
+  const dentro = (st==='allegra' && ICONE_COLORE[icona]) ? svgColore(icona)
+               : ICONE[icona] ? svgIcona(icona) : `<span class="emo">${esc(icona||'♪')}</span>`;
+  return `<span class="tile ${cls||''}" style="--colApp:${esc(colore)}">${dentro}</span>`;
+}
+
+const PREDEFINITE = {
+  titolo: 'Classe chitarra', nome: 'Ignazio Paolicelli', scT:1, scN:0.5, scS:1, scA:1, stileIcone:'allegra', logo:false,
+  chitarra:true, chitarraPos:'banner', chitarraOp:0.55, rimosse:[], v3:true, v4:true, v5:true,
+  sottotitolo: 'Le app della classe, in un solo posto',
+  piede: 'Copyright © Ignazio Paolicelli',
+  colori: { bg1:'#2b1a10', bg2:'#0b0705', card:'#1a110b', testo:'#f4e9d6', accento:'#c9a45c' },
+  font: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif",
+  colonne: 2, grandezza: 120, raggio: 14, altezza: 1.2, live: true, dentro: true,
+  app: [
+    { id:'metronomo', nome:'Metronomo', icona:'metronomo', colore:'#ff7b29', url:'https://rhk93.github.io/Metronomoweb/', descr:'Tieni il tempo mentre suoni', visibile:true },
+    { id:'accordi',   nome:'Accordi',   icona:'accordi', colore:'#1fa2ff', url:'https://rhk93.github.io/ACCORDI-web/', descr:'Gli schemi di tutti gli accordi', visibile:true },
+    { id:'aula',      nome:'Aula digitale', icona:'aula', colore:'#2ed15f', url:'https://rhk93.github.io/AULA/', descr:'Lezioni, compiti ed esercitazioni', visibile:true },
+    { id:'appnote',   nome:'AppNOTE',   icona:'pentagramma', colore:'#a45cff', url:'https://rhk93.github.io/AppNOTE/', descr:'Pentagramma sonoro: tocca e ascolta', visibile:true },
+    { id:'caccia',    nome:'Gioco Note', icona:'bersaglio', colore:'#ffb000', url:'https://rhk93.github.io/CacciaAlleNote/', descr:'Caccia alle Note: allenati a riconoscerle', visibile:true },
+    { id:'spartiti',  nome:'Spartiti',  icona:'spartito', colore:'#ff4fa3', url:'https://rhk93.github.io/SpartitiChitarra/', descr:'Tocca una nota dello spartito e la vedi sulla chitarra', visibile:true }
+  ]
+};
+
+const TEMI = [
+  { nome:'Concerto', bg1:'#2b1a10', bg2:'#0b0705', card:'#1a110b', testo:'#f4e9d6', accento:'#c9a45c' },
+  { nome:'Ebano',    bg1:'#1c1c1f', bg2:'#050506', card:'#141416', testo:'#ececec', accento:'#b9bcc4' },
+  { nome:'Palissandro', bg1:'#3d1414', bg2:'#120606', card:'#241010', testo:'#f6e7dc', accento:'#d4a373' },
+  { nome:'Legno',    bg1:'#3b2414', bg2:'#1a0f08', card:'#2a1a0e', testo:'#fff6e8', accento:'#f0a63a' },
+  { nome:'Notte',    bg1:'#1b2140', bg2:'#090b18', card:'#161b33', testo:'#eef1ff', accento:'#7aa2ff' },
+  { nome:'Oceano',   bg1:'#0f6b7a', bg2:'#06303a', card:'#0b4450', testo:'#e9fbff', accento:'#4fe3d0' },
+  { nome:'Bosco',    bg1:'#2d5a2d', bg2:'#0f2410', card:'#1d3d1e', testo:'#f0ffe9', accento:'#b6e35a' },
+  { nome:'Rock',     bg1:'#3a0d0d', bg2:'#0d0d0d', card:'#1f1212', testo:'#ffffff', accento:'#ff3b3b' },
+  { nome:'Chiaro',   bg1:'#fdf6ec', bg2:'#f1e2cc', card:'#ffffff', testo:'#2b1d10', accento:'#c46a14' },
+  { nome:'Caramella',bg1:'#ff9ecf', bg2:'#8a5cf6', card:'#ffffff', testo:'#3a1450', accento:'#ff4fa0' },
+  { nome:'Sole',     bg1:'#ffd166', bg2:'#f78c3b', card:'#fff8e7', testo:'#3b2400', accento:'#d6421f' },
+  { nome:'Grigio',   bg1:'#4a4f57', bg2:'#1e2126', card:'#2e3238', testo:'#f4f5f7', accento:'#ffcc33' }
+];
+
+let cfg = carica();
+
+function clona(o){ return JSON.parse(JSON.stringify(o)); }
+function carica(){
+  try{
+    const s = localStorage.getItem(CHIAVE);
+    if(s){ return sistema(JSON.parse(s)); }
+  }catch(e){}
+  return clona(PREDEFINITE);
+}
+function sistema(o){
+  const c = Object.assign(clona(PREDEFINITE), o, { colori:Object.assign({},PREDEFINITE.colori,o.colori||{}) });
+  if([TITOLO_VECCHIO,'Classe chitarra Paolicelli Ignazio','Classe chitarra Ignazio Paolicelli'].includes(c.titolo)){ c.titolo='Classe chitarra'; c.nome='Ignazio Paolicelli'; }
+  if(c.nome===undefined) c.nome='';
+  ['scT','scN','scS','scA'].forEach(k=>{ if(typeof c[k]!=='number') c[k]=PREDEFINITE[k]; });
+  if(!c.grandezza) c.grandezza = PREDEFINITE.grandezza;
+  if(!c.v3){ // passaggio alle icone allegre
+    const vivaci = {"#a8432f": "#ff7a3d", "#3f6e8c": "#2f8cf0", "#4f7a52": "#3cbf5c", "#6d4f8a": "#a35be8", "#b88a2e": "#ffb31f", "#8a5a3b": "#1fc2b0"};
+    if(c.stileIcone==='riquadro') c.stileIcone='allegra';
+    c.app.forEach(a=>{ if(vivaci[a.colore]) a.colore = vivaci[a.colore]; });
+    c.v3 = true;
+  }
+  c.stileIcone='allegra';
+  if(!c.v5){ c.font = PREDEFINITE.font; c.v5=true; }
+  if(!c.v4){ // riquadri allegri e più piccoli
+    const vivaci = {"#ff7a3d": "#ff7b29", "#2f8cf0": "#1fa2ff", "#3cbf5c": "#2ed15f", "#a35be8": "#a45cff", "#ffb31f": "#ffb000", "#1fc2b0": "#ff4fa3"};
+    c.app.forEach(a=>{ if(vivaci[a.colore]) a.colore = vivaci[a.colore]; });
+    c.stileIcone='allegra'; if(c.grandezza>=160) c.grandezza=120;
+    c.v4 = true;
+  }
+  c.app.forEach(a=>{ if(!a.icona){ a.icona = ICONE_DEF[a.id] || 'nota'; } delete a.emoji; });
+  // aggiunge le app nuove (se non sono state eliminate apposta)
+  c.rimosse = c.rimosse || [];
+  PREDEFINITE.app.forEach(p=>{ if(!c.app.some(a=>a.id===p.id) && !c.rimosse.includes(p.id)) c.app.push(clona(p)); });
+  return c;
+}
+function salva(){ try{ localStorage.setItem(CHIAVE, JSON.stringify(cfg)); }catch(e){} }
+const $ = id => document.getElementById(id);
+function avviso(t){ const a=$('avviso'); a.textContent=t; a.classList.add('vedi'); clearTimeout(a._t); a._t=setTimeout(()=>a.classList.remove('vedi'),2000); }
+function esc(s){ return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+/* ---------- Applica stile ---------- */
+function applicaStile(){
+  const r = document.documentElement.style, c = cfg.colori;
+  r.setProperty('--bg1',c.bg1); r.setProperty('--bg2',c.bg2); r.setProperty('--card',c.card);
+  r.setProperty('--testo',c.testo); r.setProperty('--accento',c.accento);
+  r.setProperty('--font',cfg.font); r.setProperty('--larg',cfg.grandezza+'px');
+  r.setProperty('--scT',cfg.scT); r.setProperty('--scN',cfg.scN+'em'); r.setProperty('--scS',cfg.scS); r.setProperty('--scA',cfg.scA);
+  r.setProperty('--raggio',cfg.raggio+'px'); r.setProperty('--anteprimaH',cfg.altezza);
+  document.querySelector('meta[name=theme-color]').content = c.bg1;
+  document.body.classList.remove('stile-riquadro','stile-cerchio','stile-linea');
+  document.body.classList.add('stile-'+cfg.stileIcone);
+  $('logo').innerHTML = svgIcona('chitarra'); $('logo').style.display = cfg.logo ? '' : 'none';
+  const sc=$('sfondoChitarra'); sc.className = cfg.chitarra ? cfg.chitarraPos : 'spenta';
+  r.setProperty('--opChitarra', cfg.chitarraOp);
+  $('titolo').textContent = cfg.titolo;
+  $('nomeTit').textContent = cfg.nome; $('nomeTit').style.display = cfg.nome ? '' : 'none';
+  $('sottotitolo').textContent = cfg.sottotitolo;
+  $('sottotitolo').style.display = cfg.sottotitolo ? '' : 'none';
+  $('piede').textContent = cfg.piede;
+  document.title = ((cfg.titolo+' '+(cfg.nome||'')).trim()) || 'Classe chitarra';
+  aggiornaScale();
+}
+
+/* ---------- Home ---------- */
+function disegnaHome(){
+  const g = $('griglia'); g.innerHTML = '';
+  const vis = cfg.app.filter(a=>a.visibile);
+  if(!vis.length){ g.innerHTML = '<div class="vuoto">Nessuna app visibile. Premi ⚙️ per aggiungerne.</div>'; return; }
+  vis.forEach(a=>{
+    const b = document.createElement('button');
+    b.className = 'app'; b.style.setProperty('--colApp', a.colore);
+    b.innerHTML = `
+      <div class="anteprima${cfg.live?' live':''}">
+        <div class="segnaposto">${tile(a.icona,a.colore)}</div>
+        ${cfg.live ? `<iframe loading="lazy" tabindex="-1" aria-hidden="true" scrolling="no" src="${esc(a.url)}"></iframe>` : ''}
+        <div class="velo"></div>
+      </div>
+      <div class="info">
+        <div class="nome">${tile(a.icona,a.colore)}<span>${esc(a.nome)}</span></div>
+        ${a.descr ? `<div class="descr">${esc(a.descr)}</div>` : ''}
+      </div>`;
+    b.dataset.id = a.id;
+    b.onclick = () => { if(document.body.classList.contains('ordina') || b._premuto) return; apriApp(a); };
+    attivaTrascina(b);
+    g.appendChild(b);
+  });
+  aggiornaScale();
+}
+
+/* ---------- Riordino: tieni premuto o tasto ⇅, poi trascina ---------- */
+function entraOrdina(){ document.body.classList.add('ordina'); avviso('Trascina le app nella posizione che vuoi'); }
+function esciOrdina(){ document.body.classList.remove('ordina'); salvaOrdine(); }
+function salvaOrdine(){
+  const ids = [...$('griglia').querySelectorAll('.app')].map(e=>e.dataset.id);
+  const visibili = cfg.app.filter(a=>a.visibile);
+  const perId = Object.fromEntries(cfg.app.map(a=>[a.id,a]));
+  let k = 0;
+  cfg.app = cfg.app.map(a => a.visibile ? perId[ids[k++]] || a : a);
+  salva();
+}
+function attivaTrascina(el){
+  let timer=null, presa=false, x0=0, y0=0;
+  el.addEventListener('pointerdown', e=>{
+    x0=e.clientX; y0=e.clientY; el._premuto=false;
+    if(document.body.classList.contains('ordina')){ inizia(e); return; }
+    timer = setTimeout(()=>{ el._premuto=true; entraOrdina(); if(navigator.vibrate) try{navigator.vibrate(30)}catch(_){} inizia(e); }, 550);
+  });
+  el.addEventListener('pointermove', e=>{
+    if(timer && Math.hypot(e.clientX-x0,e.clientY-y0)>10){ clearTimeout(timer); timer=null; }
+    if(!presa) return;
+    e.preventDefault();
+    el.style.transform = `translate(${e.clientX-x0}px,${e.clientY-y0}px) scale(1.06)`;
+    el.style.pointerEvents='none';
+    const sotto = document.elementFromPoint(e.clientX,e.clientY);
+    el.style.pointerEvents='';
+    const altro = sotto && sotto.closest && sotto.closest('.app');
+    if(altro && altro!==el && altro.parentNode===el.parentNode){
+      const prima = el.getBoundingClientRect();
+      const lista=[...el.parentNode.children];
+      if(lista.indexOf(altro) > lista.indexOf(el)) altro.after(el); else altro.before(el);
+      const dopo = el.getBoundingClientRect();
+      x0 += dopo.left-prima.left; y0 += dopo.top-prima.top;
+      el.style.transform = `translate(${e.clientX-x0}px,${e.clientY-y0}px) scale(1.06)`;
+    }
+  });
+  const fine = ()=>{
+    clearTimeout(timer); timer=null;
+    if(presa){ presa=false; el.classList.remove('presa'); el.style.transform=''; salvaOrdine(); }
+    setTimeout(()=>{ el._premuto=false; }, 50);
+  };
+  el.addEventListener('pointerup', fine); el.addEventListener('pointercancel', fine);
+  el.addEventListener('contextmenu', e=>e.preventDefault());
+  function inizia(e){ presa=true; el.classList.add('presa'); try{ el.setPointerCapture(e.pointerId); }catch(_){}
+    // con la cattura, elementFromPoint funziona lo stesso
+  }
+}
+$('zOrdina').onclick = ()=> document.body.classList.contains('ordina') ? esciOrdina() : entraOrdina();
+$('fineOrdina').onclick = esciOrdina;
+document.body.appendChild($('barraOrdina'));
+
+// Rimpicciolisce l'anteprima per farla stare nel riquadro
+function aggiornaScale(){
+  document.querySelectorAll('.anteprima').forEach(el=>{
+    el.style.setProperty('--scala', el.clientWidth/400);
+  });
+}
+if('ResizeObserver' in window){ new ResizeObserver(aggiornaScale).observe($('griglia')); }
+window.addEventListener('resize', aggiornaScale);
+
+/* ---------- Visore ---------- */
+let appAperta = null;
+function apriApp(a){
+  if(!cfg.dentro){ window.open(a.url,'_blank','noopener'); return; }
+  appAperta = a;
+  $('titoloVisore').textContent = a.nome;
+  $('esterno').href = a.url;
+  $('caricamento').style.display = 'block';
+  $('frameApp').src = a.url;
+  $('visore').classList.add('aperto');
+  document.body.style.overflow = 'hidden';
+  history.pushState({app:a.id}, '', '#'+a.id);
+}
+function chiudiApp(daStoria){
+  if(!$('visore').classList.contains('aperto')) return;
+  $('visore').classList.remove('aperto');
+  $('frameApp').src = 'about:blank';
+  document.body.style.overflow = '';
+  appAperta = null;
+  if(!daStoria && location.hash) history.back();
+}
+$('frameApp').addEventListener('load',()=>{ $('caricamento').style.display='none'; });
+$('indietro').onclick = ()=>chiudiApp(false);
+$('ricarica').onclick = ()=>{ if(appAperta){ $('caricamento').style.display='block'; $('frameApp').src='about:blank'; setTimeout(()=>$('frameApp').src=appAperta.url,50);} };
+window.addEventListener('popstate',()=>{
+  if($('pannello').classList.contains('aperto')) { chiudiPannello(true); return; }
+  chiudiApp(true);
+});
+
+/* ---------- Pannello ---------- */
+function apriPannello(){ riempiPannello(); $('pannello').classList.add('aperto'); history.pushState({p:1},'','#personalizza'); }
+function chiudiPannello(daStoria){
+  $('pannello').classList.remove('aperto'); $('areaCodice').style.display='none';
+  if(!daStoria && location.hash) history.back();
+}
+$('apriImpost').onclick = apriPannello;
+$('chiudiImpost').onclick = ()=>chiudiPannello(false);
+$('sfondoPannello').onclick = ()=>chiudiPannello(false);
+
+function riempiPannello(){
+  $('inTitolo').value = cfg.titolo; $('inNome').value = cfg.nome;
+  ['scT','scN','scS','scA'].forEach(k=>{ $('in'+k[0].toUpperCase()+k.slice(1)).value=cfg[k]; $('v'+k[0].toUpperCase()+k.slice(1)).textContent=Math.round(cfg[k]*(k==='scN'?200:100))+'%'; }); $('inSottotitolo').value = cfg.sottotitolo; $('inPiede').value = cfg.piede;
+  $('cBg1').value=cfg.colori.bg1; $('cBg2').value=cfg.colori.bg2; $('cCard').value=cfg.colori.card;
+  $('cTesto').value=cfg.colori.testo; $('cAccento').value=cfg.colori.accento;
+  $('inFont').value = cfg.font;
+  $('inCol').value = cfg.grandezza; $('vCol').textContent = cfg.grandezza+' px';
+  $('inRag').value = cfg.raggio; $('vRag').textContent = cfg.raggio;
+  $('inAlt').value = cfg.altezza; $('vAlt').textContent = (+cfg.altezza).toFixed(2);
+  $('inLogo').checked = cfg.logo;
+  $('inChit').checked = cfg.chitarra; $('inChitPos').value = cfg.chitarraPos;
+  $('inChitOp').value = cfg.chitarraOp; $('vChit').textContent = Math.round(cfg.chitarraOp*100)+'%';
+  $('inLive').checked = cfg.live; $('inDentro').checked = cfg.dentro;
+  disegnaElencoApp();
+}
+
+// Temi
+TEMI.forEach(t=>{
+  const b = document.createElement('button'); b.className='tema'; b.textContent=t.nome;
+  b.style.background = `linear-gradient(135deg,${t.bg1},${t.bg2})`;
+  b.style.borderColor = t.accento;
+  b.onclick = ()=>{ cfg.colori = {bg1:t.bg1,bg2:t.bg2,card:t.card,testo:t.testo,accento:t.accento}; salva(); applicaStile(); riempiPannello(); avviso('Tema "'+t.nome+'" applicato'); };
+  $('temi').appendChild(b);
+});
+
+$('inLogo') && ($('inLogo').onchange = e=>{ cfg.logo=e.target.checked; salva(); applicaStile(); });
+
+$('inChit').onchange = e=>{ cfg.chitarra=e.target.checked; salva(); applicaStile(); };
+$('inChitPos').onchange = e=>{ cfg.chitarraPos=e.target.value; salva(); applicaStile(); };
+$('inChitOp').oninput = e=>{ cfg.chitarraOp=+e.target.value; $('vChit').textContent=Math.round(cfg.chitarraOp*100)+'%'; salva(); applicaStile(); };
+
+['scT','scN','scS','scA'].forEach(k=>{
+  const K=k[0].toUpperCase()+k.slice(1);
+  $('in'+K).oninput = e=>{ cfg[k]=+e.target.value; $('v'+K).textContent=Math.round(cfg[k]*(k==='scN'?200:100))+'%'; salva(); applicaStile(); };
+});
+
+// Testi
+[['inTitolo','titolo'],['inNome','nome'],['inSottotitolo','sottotitolo'],['inPiede','piede']].forEach(([id,k])=>{
+  $(id).oninput = e=>{ cfg[k]=e.target.value; salva(); applicaStile(); };
+});
+// Colori
+[['cBg1','bg1'],['cBg2','bg2'],['cCard','card'],['cTesto','testo'],['cAccento','accento']].forEach(([id,k])=>{
+  $(id).oninput = e=>{ cfg.colori[k]=e.target.value; salva(); applicaStile(); };
+});
+$('inFont').onchange = e=>{ cfg.font=e.target.value; salva(); applicaStile(); };
+$('inCol').oninput = e=>{ cfg.grandezza=+e.target.value; $('vCol').textContent=cfg.grandezza+' px'; salva(); applicaStile(); };
+function zoom(d){ cfg.grandezza=Math.max(90,Math.min(420,cfg.grandezza+d)); salva(); applicaStile(); avviso('Grandezza riquadri: '+cfg.grandezza+' px'); }
+$('zMeno').onclick=()=>zoom(-20); $('zPiu').onclick=()=>zoom(20);
+$('inRag').oninput = e=>{ cfg.raggio=+e.target.value; $('vRag').textContent=cfg.raggio; salva(); applicaStile(); };
+$('inAlt').oninput = e=>{ cfg.altezza=+e.target.value; $('vAlt').textContent=(+cfg.altezza).toFixed(2); salva(); applicaStile(); };
+$('inLive').onchange = e=>{ cfg.live=e.target.checked; salva(); disegnaHome(); };
+$('inDentro').onchange = e=>{ cfg.dentro=e.target.checked; salva(); };
+
+// Elenco app modificabile
+function disegnaElencoApp(){
+  const box = $('elencoApp'); box.innerHTML='';
+  cfg.app.forEach((a,i)=>{
+    const d = document.createElement('div');
+    d.className = 'schedaApp'+(a.visibile?'':' nascosta'); d.style.setProperty('--c',a.colore);
+    d.innerHTML = `
+      <div class="testa">
+        <button class="sceltaIcona" aria-label="Cambia icona">${tile(a.icona,a.colore)}</button>
+        <input type="text" class="nomeApp" value="${esc(a.nome)}" data-k="nome" aria-label="Nome">
+        <input type="color" value="${esc(a.colore)}" data-k="colore" aria-label="Colore">
+      </div>
+      <div class="galleria">
+        ${Object.keys(ICONE).map(k=>`<button data-ic="${k}" class="${a.icona===k?'sel':''}" aria-label="${k}">${tile(k,a.colore)}</button>`).join('')}
+        <div class="riga-emoji">oppure un simbolo/emoji: <input type="text" maxlength="4" value="${ICONE[a.icona]?'':esc(a.icona)}" data-emo="1"></div>
+      </div>
+      <div class="campi">
+        <input type="text" value="${esc(a.descr)}" data-k="descr" placeholder="Descrizione breve">
+        <input type="url" value="${esc(a.url)}" data-k="url" placeholder="https://...">
+      </div>
+      <div class="azioni">
+        <button class="btn piccolo" data-az="su" ${i===0?'disabled':''}>▲</button>
+        <button class="btn piccolo" data-az="giu" ${i===cfg.app.length-1?'disabled':''}>▼</button>
+        <button class="btn piccolo" data-az="vis">${a.visibile?'👁 Visibile':'🚫 Nascosta'}</button>
+        <button class="btn piccolo pericolo" data-az="del">🗑</button>
+      </div>`;
+    d.querySelectorAll('[data-k]').forEach(inp=>{
+      inp.oninput = ()=>{
+        a[inp.dataset.k] = inp.value;
+        if(inp.dataset.k==='colore'){ d.style.setProperty('--c',a.colore); d.querySelectorAll('.tile').forEach(t=>t.style.setProperty('--colApp',a.colore)); }
+        salva();
+      };
+      inp.onchange = ()=>disegnaHome();
+    });
+    d.querySelector('.sceltaIcona').onclick = ()=>d.querySelector('.galleria').classList.toggle('aperta');
+    d.querySelectorAll('[data-ic]').forEach(btn=>{
+      btn.onclick = ()=>{ a.icona=btn.dataset.ic; salva(); disegnaElencoApp(); disegnaHome();
+        $('elencoApp').children[i].querySelector('.galleria').classList.add('aperta'); };
+    });
+    d.querySelector('[data-emo]').onchange = e=>{ const v=e.target.value.trim(); if(v){ a.icona=v; salva(); disegnaElencoApp(); disegnaHome(); } };
+    d.querySelectorAll('[data-az]').forEach(btn=>{
+      btn.onclick = ()=>{
+        const az = btn.dataset.az;
+        if(az==='su' && i>0){ [cfg.app[i-1],cfg.app[i]]=[cfg.app[i],cfg.app[i-1]]; }
+        if(az==='giu' && i<cfg.app.length-1){ [cfg.app[i+1],cfg.app[i]]=[cfg.app[i],cfg.app[i+1]]; }
+        if(az==='vis'){ a.visibile=!a.visibile; }
+        if(az==='del'){
+          if(btn.dataset.conf!=='1'){ btn.dataset.conf='1'; btn.textContent='Sicuro? Tocca ancora'; return; }
+          (cfg.rimosse=cfg.rimosse||[]).push(a.id); cfg.app.splice(i,1); avviso('App eliminata');
+        }
+        salva(); disegnaElencoApp(); disegnaHome();
+      };
+    });
+    box.appendChild(d);
+  });
+}
+$('aggiungi').onclick = ()=>{
+  cfg.app.push({ id:'app'+Date.now(), nome:'Nuova app', icona:'nota', colore:'#888888', url:'https://rhk93.github.io/', descr:'', visibile:true });
+  salva(); disegnaElencoApp(); disegnaHome();
+  setTimeout(()=>{ const s=$('elencoApp').lastElementChild; s.scrollIntoView({behavior:'smooth',block:'center'}); s.querySelector('.nomeApp').select(); },50);
+};
+
+// Esporta / importa / reset
+$('esporta').onclick = async ()=>{
+  const t = JSON.stringify(cfg);
+  try{ await navigator.clipboard.writeText(t); avviso('Impostazioni copiate'); }
+  catch(e){ const ar=$('areaCodice'); ar.style.display='block'; ar.value=t; ar.select(); avviso('Copia il testo qui sotto'); }
+};
+$('importa').onclick = ()=>{
+  const ar = $('areaCodice');
+  if(ar.style.display!=='block' || !ar.value.trim()){ ar.style.display='block'; ar.value=''; ar.focus(); avviso('Incolla il codice e premi di nuovo'); return; }
+  try{
+    const o = JSON.parse(ar.value);
+    if(!o.app) throw 0;
+    cfg = sistema(o);
+    salva(); applicaStile(); disegnaHome(); riempiPannello(); ar.style.display='none'; avviso('Impostazioni caricate ✔');
+  }catch(e){ avviso('Codice non valido'); }
+};
+$('reset').onclick = e=>{
+  const b = e.currentTarget;
+  if(b.dataset.conf!=='1'){ b.dataset.conf='1'; b.textContent='Sicuro? Tocca ancora'; setTimeout(()=>{b.dataset.conf='';b.textContent='↺ Ripristina tutto';},3000); return; }
+  cfg = clona(PREDEFINITE); salva(); applicaStile(); disegnaHome(); riempiPannello();
+  b.dataset.conf=''; b.textContent='↺ Ripristina tutto'; avviso('Tutto ripristinato');
+};
+
+/* ---------- Avvio ---------- */
+applicaStile();
+disegnaHome();
+if(location.hash){ history.replaceState(null,'',location.pathname); }
+</script>
+</body>
+</html>
