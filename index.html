@@ -140,7 +140,7 @@ body.stile-allegra .anteprima{background:none;aspect-ratio:auto;height:auto;padd
 body.stile-allegra .anteprima .velo{display:none}
 body.stile-allegra .anteprima .segnaposto{position:relative;inset:auto}
 body.stile-allegra .anteprima .segnaposto .tile{width:72%;background:none;box-shadow:none;border-radius:0;aspect-ratio:1;
-  animation:dondola 3s ease-in-out infinite}
+}
 body.stile-allegra .anteprima .segnaposto .tile:after{display:none}
 body.stile-allegra .app:nth-child(2n) .tile{animation-delay:-1.5s}
 body.stile-allegra .tile svg.colorata{width:100%;height:100%;filter:drop-shadow(0 4px 3px rgba(0,0,0,.28))}
@@ -231,7 +231,7 @@ footer{text-align:center;opacity:.7;font-size:.95rem;padding:14px 0 26px;letter-
 .stili button{background:#2c2c33;border:2px solid transparent;border-radius:12px;padding:8px 4px;font-size:.8rem;color:#fff;display:flex;flex-direction:column;align-items:center;gap:6px}
 .stili button.sel{border-color:#ffc46b}
 .stili .tile{width:40px;height:40px;--colApp:#e5533d}
-.schedaApp .testa input.nomeApp{flex:1}
+.schedaApp .testa .nomeApp{flex:1;font-weight:600;font-size:1rem}
 .schedaApp .campi{display:grid;gap:6px;margin-top:8px}
 .schedaApp .azioni{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;align-items:center}
 .schedaApp.nascosta{opacity:.5}
@@ -338,12 +338,6 @@ footer{text-align:center;opacity:.7;font-size:.95rem;padding:14px 0 26px;letter-
   <div class="contenuto">
     <h2>Personalizza <button class="chiudi" id="chiudiImpost">✕</button></h2>
 
-    <h3>Testi</h3>
-    <div class="riga"><input type="text" id="inTitolo" placeholder="Titolo"></div>
-    <div class="riga"><input type="text" id="inNome" placeholder="Nome (scritto più piccolo, sotto il titolo)"></div>
-    <div class="riga"><input type="text" id="inSottotitolo" placeholder="Sottotitolo"></div>
-    <div class="riga"><input type="text" id="inPiede" placeholder="Testo in fondo"></div>
-
     <h3>Grandezza del testo</h3>
     <div class="riga"><label>Titolo: <b id="vScT"></b></label><input type="range" id="inScT" min="0.5" max="1.6" step="0.05"></div>
     <div class="riga"><label>Nome (sotto il titolo): <b id="vScN"></b></label><input type="range" id="inScN" min="0.25" max="1" step="0.05"></div>
@@ -385,15 +379,11 @@ footer{text-align:center;opacity:.7;font-size:.95rem;padding:14px 0 26px;letter-
     </div>
     <div class="riga"><label>Grandezza riquadri: <b id="vCol"></b></label><input type="range" id="inCol" min="90" max="420" step="10"></div>
     <div class="riga"><label>Arrotondamento: <b id="vRag"></b></label><input type="range" id="inRag" min="0" max="36" step="2"></div>
-    <div class="riga"><label>Altezza anteprima: <b id="vAlt"></b></label><input type="range" id="inAlt" min="0.6" max="2" step="0.05"></div>
-    <div class="riga"><label>Anteprime dal vivo<div class="nota-p">Se il telefono è lento spegnile: resta l'icona.</div></label>
-      <label class="toggle"><input type="checkbox" id="inLive"><span></span></label></div>
     <div class="riga"><label>Apri le app dentro questa app<div class="nota-p">Spento = si aprono in una nuova scheda.</div></label>
       <label class="toggle"><input type="checkbox" id="inDentro"><span></span></label></div>
 
     <h3>Le app</h3>
     <div id="elencoApp"></div>
-    <button class="btn primario" id="aggiungi" style="width:100%;margin-top:6px">＋ Aggiungi app</button>
 
     <h3>Salva / ripristina</h3>
     <div class="nota-p">Le modifiche si salvano da sole su questo dispositivo. Per portarle su un altro dispositivo copia il codice e incollalo lì.</div>
@@ -465,7 +455,7 @@ const PREDEFINITE = {
   piede: 'Copyright © Ignazio Paolicelli',
   colori: { bg1:'#2b1a10', bg2:'#0b0705', card:'#1a110b', testo:'#f4e9d6', accento:'#c9a45c' },
   font: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif",
-  colonne: 2, grandezza: 120, raggio: 14, altezza: 1.2, live: true, dentro: true,
+  colonne: 2, grandezza: 120, raggio: 14, altezza: 1.2, live: false, dentro: true,
   app: [
     { id:'metronomo', nome:'Metronomo', icona:'metronomo', colore:'#ff7b29', url:'https://rhk93.github.io/Metronomoweb/', descr:'Tieni il tempo mentre suoni', visibile:true },
     { id:'accordi',   nome:'Accordi',   icona:'accordi', colore:'#1fa2ff', url:'https://rhk93.github.io/ACCORDI-web/', descr:'Gli schemi di tutti gli accordi', visibile:true },
@@ -514,11 +504,21 @@ function sistema(o){
     c.v3 = true;
   }
   c.stileIcone='allegra';
+  // testi fissi: sempre quelli originali
+  ['titolo','nome','sottotitolo','piede'].forEach(k=>{ c[k]=PREDEFINITE[k]; });
+  c.live = false;
+  c.app = c.app.filter(a=>PREDEFINITE.app.some(p=>p.id===a.id));
+  c.app.forEach(a=>{ const p=PREDEFINITE.app.find(p=>p.id===a.id); a.nome=p.nome; a.descr=p.descr; a.url=p.url; });
   if(!c.v5){ c.font = PREDEFINITE.font; c.v5=true; }
   if(!c.v4){ // riquadri allegri e più piccoli
     const vivaci = {"#ff7a3d": "#ff7b29", "#2f8cf0": "#1fa2ff", "#3cbf5c": "#2ed15f", "#a35be8": "#a45cff", "#ffb31f": "#ffb000", "#1fc2b0": "#ff4fa3"};
     c.app.forEach(a=>{ if(vivaci[a.colore]) a.colore = vivaci[a.colore]; });
-    c.stileIcone='allegra'; if(c.grandezza>=160) c.grandezza=120;
+    c.stileIcone='allegra';
+  // testi fissi: sempre quelli originali
+  ['titolo','nome','sottotitolo','piede'].forEach(k=>{ c[k]=PREDEFINITE[k]; });
+  c.live = false;
+  c.app = c.app.filter(a=>PREDEFINITE.app.some(p=>p.id===a.id));
+  c.app.forEach(a=>{ const p=PREDEFINITE.app.find(p=>p.id===a.id); a.nome=p.nome; a.descr=p.descr; a.url=p.url; }); if(c.grandezza>=160) c.grandezza=120;
     c.v4 = true;
   }
   c.app.forEach(a=>{ if(!a.icona){ a.icona = ICONE_DEF[a.id] || 'nota'; } delete a.emoji; });
@@ -681,18 +681,15 @@ $('chiudiImpost').onclick = ()=>chiudiPannello(false);
 $('sfondoPannello').onclick = ()=>chiudiPannello(false);
 
 function riempiPannello(){
-  $('inTitolo').value = cfg.titolo; $('inNome').value = cfg.nome;
-  ['scT','scN','scS','scA'].forEach(k=>{ $('in'+k[0].toUpperCase()+k.slice(1)).value=cfg[k]; $('v'+k[0].toUpperCase()+k.slice(1)).textContent=Math.round(cfg[k]*(k==='scN'?200:100))+'%'; }); $('inSottotitolo').value = cfg.sottotitolo; $('inPiede').value = cfg.piede;
+  ['scT','scN','scS','scA'].forEach(k=>{ $('in'+k[0].toUpperCase()+k.slice(1)).value=cfg[k]; $('v'+k[0].toUpperCase()+k.slice(1)).textContent=Math.round(cfg[k]*(k==='scN'?200:100))+'%'; });
   $('cBg1').value=cfg.colori.bg1; $('cBg2').value=cfg.colori.bg2; $('cCard').value=cfg.colori.card;
   $('cTesto').value=cfg.colori.testo; $('cAccento').value=cfg.colori.accento;
   $('inFont').value = cfg.font;
   $('inCol').value = cfg.grandezza; $('vCol').textContent = cfg.grandezza+' px';
   $('inRag').value = cfg.raggio; $('vRag').textContent = cfg.raggio;
-  $('inAlt').value = cfg.altezza; $('vAlt').textContent = (+cfg.altezza).toFixed(2);
   $('inLogo').checked = cfg.logo;
   $('inChit').checked = cfg.chitarra; $('inChitPos').value = cfg.chitarraPos;
-  $('inChitOp').value = cfg.chitarraOp; $('vChit').textContent = Math.round(cfg.chitarraOp*100)+'%';
-  $('inLive').checked = cfg.live; $('inDentro').checked = cfg.dentro;
+  $('inChitOp').value = cfg.chitarraOp; $('vChit').textContent = Math.round(cfg.chitarraOp*100)+'%'; $('inDentro').checked = cfg.dentro;
   disegnaElencoApp();
 }
 
@@ -716,10 +713,6 @@ $('inChitOp').oninput = e=>{ cfg.chitarraOp=+e.target.value; $('vChit').textCont
   $('in'+K).oninput = e=>{ cfg[k]=+e.target.value; $('v'+K).textContent=Math.round(cfg[k]*(k==='scN'?200:100))+'%'; salva(); applicaStile(); };
 });
 
-// Testi
-[['inTitolo','titolo'],['inNome','nome'],['inSottotitolo','sottotitolo'],['inPiede','piede']].forEach(([id,k])=>{
-  $(id).oninput = e=>{ cfg[k]=e.target.value; salva(); applicaStile(); };
-});
 // Colori
 [['cBg1','bg1'],['cBg2','bg2'],['cCard','card'],['cTesto','testo'],['cAccento','accento']].forEach(([id,k])=>{
   $(id).oninput = e=>{ cfg.colori[k]=e.target.value; salva(); applicaStile(); };
@@ -729,8 +722,6 @@ $('inCol').oninput = e=>{ cfg.grandezza=+e.target.value; $('vCol').textContent=c
 function zoom(d){ cfg.grandezza=Math.max(90,Math.min(420,cfg.grandezza+d)); salva(); applicaStile(); avviso('Grandezza riquadri: '+cfg.grandezza+' px'); }
 $('zMeno').onclick=()=>zoom(-20); $('zPiu').onclick=()=>zoom(20);
 $('inRag').oninput = e=>{ cfg.raggio=+e.target.value; $('vRag').textContent=cfg.raggio; salva(); applicaStile(); };
-$('inAlt').oninput = e=>{ cfg.altezza=+e.target.value; $('vAlt').textContent=(+cfg.altezza).toFixed(2); salva(); applicaStile(); };
-$('inLive').onchange = e=>{ cfg.live=e.target.checked; salva(); disegnaHome(); };
 $('inDentro').onchange = e=>{ cfg.dentro=e.target.checked; salva(); };
 
 // Elenco app modificabile
@@ -742,22 +733,17 @@ function disegnaElencoApp(){
     d.innerHTML = `
       <div class="testa">
         <button class="sceltaIcona" aria-label="Cambia icona">${tile(a.icona,a.colore)}</button>
-        <input type="text" class="nomeApp" value="${esc(a.nome)}" data-k="nome" aria-label="Nome">
+        <div class="nomeApp">${esc(a.nome)}</div>
         <input type="color" value="${esc(a.colore)}" data-k="colore" aria-label="Colore">
       </div>
       <div class="galleria">
         ${Object.keys(ICONE).map(k=>`<button data-ic="${k}" class="${a.icona===k?'sel':''}" aria-label="${k}">${tile(k,a.colore)}</button>`).join('')}
         <div class="riga-emoji">oppure un simbolo/emoji: <input type="text" maxlength="4" value="${ICONE[a.icona]?'':esc(a.icona)}" data-emo="1"></div>
       </div>
-      <div class="campi">
-        <input type="text" value="${esc(a.descr)}" data-k="descr" placeholder="Descrizione breve">
-        <input type="url" value="${esc(a.url)}" data-k="url" placeholder="https://...">
-      </div>
       <div class="azioni">
         <button class="btn piccolo" data-az="su" ${i===0?'disabled':''}>▲</button>
         <button class="btn piccolo" data-az="giu" ${i===cfg.app.length-1?'disabled':''}>▼</button>
         <button class="btn piccolo" data-az="vis">${a.visibile?'👁 Visibile':'🚫 Nascosta'}</button>
-        <button class="btn piccolo pericolo" data-az="del">🗑</button>
       </div>`;
     d.querySelectorAll('[data-k]').forEach(inp=>{
       inp.oninput = ()=>{
@@ -789,11 +775,6 @@ function disegnaElencoApp(){
     box.appendChild(d);
   });
 }
-$('aggiungi').onclick = ()=>{
-  cfg.app.push({ id:'app'+Date.now(), nome:'Nuova app', icona:'nota', colore:'#888888', url:'https://rhk93.github.io/', descr:'', visibile:true });
-  salva(); disegnaElencoApp(); disegnaHome();
-  setTimeout(()=>{ const s=$('elencoApp').lastElementChild; s.scrollIntoView({behavior:'smooth',block:'center'}); s.querySelector('.nomeApp').select(); },50);
-};
 
 // Esporta / importa / reset
 $('esporta').onclick = async ()=>{
