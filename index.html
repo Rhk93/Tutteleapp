@@ -154,6 +154,18 @@ body.stile-allegra .info .nome .tile{display:none}
 body.stile-allegra .anteprima.live + .info .nome .tile{display:inline-flex;width:26px;height:26px;background:none;box-shadow:none}
 body.stile-allegra .anteprima.live + .info .nome .tile:after{display:none}
 body.stile-allegra .info .descr{color:#fff;opacity:.92;font-weight:700}
+/* ===== HOME: SOLO ICONE ===== */
+main .griglia{grid-template-columns:repeat(auto-fit,calc(var(--larg) + 26px));gap:22px 8px;justify-content:center;padding-top:6px}
+main .griglia .app{background:none !important;border:none !important;box-shadow:none !important;
+  -webkit-backdrop-filter:none !important;backdrop-filter:none !important;margin:0;overflow:visible;
+  align-items:center;gap:8px;container-type:normal;color:var(--testo);border-radius:0}
+main .griglia .app:hover{outline:none}
+main .griglia .app:active{transform:scale(.9)}
+.iconaHome .tile{width:var(--larg);height:var(--larg);border-radius:24%;
+  border:3px solid rgba(255,255,255,.9);box-shadow:0 5px 0 color-mix(in srgb,var(--colApp) 60%,#000),0 10px 18px rgba(0,0,0,.4)}
+.iconaHome .tile svg.colorata{width:80%;height:80%}
+.nomeHome{font-size:calc(.95rem * var(--scA,1));font-weight:600;text-align:center;line-height:1.15;
+  text-shadow:0 1px 4px rgba(0,0,0,.6);max-width:calc(var(--larg) + 26px)}
 @media (prefers-reduced-motion:reduce){ body.stile-allegra .anteprima .segnaposto .tile{animation:none} }
 body.stile-linea .tile{background:none;box-shadow:none;color:var(--colApp)}
 body.stile-linea .tile svg{width:92%;height:92%}
@@ -231,7 +243,7 @@ footer{text-align:center;opacity:.7;font-size:.95rem;padding:14px 0 26px;letter-
 .stili button{background:#2c2c33;border:2px solid transparent;border-radius:12px;padding:8px 4px;font-size:.8rem;color:#fff;display:flex;flex-direction:column;align-items:center;gap:6px}
 .stili button.sel{border-color:#ffc46b}
 .stili .tile{width:40px;height:40px;--colApp:#e5533d}
-.schedaApp .testa .nomeApp{flex:1;font-weight:600;font-size:1rem}
+.schedaApp .testa .nomeApp{flex:1;font-weight:600;font-size:1rem;min-width:0}
 .schedaApp .campi{display:grid;gap:6px;margin-top:8px}
 .schedaApp .azioni{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;align-items:center}
 .schedaApp.nascosta{opacity:.5}
@@ -310,7 +322,7 @@ footer{text-align:center;opacity:.7;font-size:.95rem;padding:14px 0 26px;letter-
   <h1><span id="titolo"></span><span id="nomeTit"></span></h1>
   <div class="fregio"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"><ellipse cx="25" cy="47" rx="8" ry="6" transform="rotate(-22 25 47)" fill="currentColor" stroke="none"/><path d="M32 45 V9 Q38 20 48 22" stroke-width="4"/></svg></div>
   <p id="sottotitolo"></p>
-  <div class="zoom"><button id="zMeno" aria-label="Riquadri più piccoli">−</button><button id="zPiu" aria-label="Riquadri più grandi">+</button><button id="zOrdina" aria-label="Riordina le app" title="Riordina le app"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16M3 8l4-4 4 4M17 20V4M13 16l4 4 4-4"/></svg></button></div>
+  <div class="zoom"><button id="zMeno" aria-label="Icone più piccole">−</button><button id="zPiu" aria-label="Icone più grandi">+</button><button id="zOrdina" aria-label="Riordina le app" title="Riordina le app"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16M3 8l4-4 4 4M17 20V4M13 16l4 4 4-4"/></svg></button></div>
   <div id="barraOrdina"><span>Trascina le app per spostarle</span><button id="fineOrdina">Fatto ✓</button></div>
   <button class="btnImpost" id="apriImpost" aria-label="Personalizza"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
 </header>
@@ -342,7 +354,7 @@ footer{text-align:center;opacity:.7;font-size:.95rem;padding:14px 0 26px;letter-
     <div class="riga"><label>Titolo: <b id="vScT"></b></label><input type="range" id="inScT" min="0.5" max="1.6" step="0.05"></div>
     <div class="riga"><label>Nome (sotto il titolo): <b id="vScN"></b></label><input type="range" id="inScN" min="0.25" max="1" step="0.05"></div>
     <div class="riga"><label>Sottotitolo: <b id="vScS"></b></label><input type="range" id="inScS" min="0.5" max="1.8" step="0.05"></div>
-    <div class="riga"><label>Nomi delle app: <b id="vScA"></b></label><input type="range" id="inScA" min="0.6" max="1.8" step="0.05"></div>
+    <div class="riga"><label>Nomi sotto le icone: <b id="vScA"></b></label><input type="range" id="inScA" min="0.6" max="1.8" step="0.05"></div>
 
     <h3>Temi pronti</h3>
     <div class="temi" id="temi"></div>
@@ -377,12 +389,26 @@ footer{text-align:center;opacity:.7;font-size:.95rem;padding:14px 0 26px;letter-
         <option value="Impact, 'Arial Black', sans-serif">Grassetto</option>
       </select>
     </div>
-    <div class="riga"><label>Grandezza riquadri: <b id="vCol"></b></label><input type="range" id="inCol" min="90" max="420" step="10"></div>
+    <div class="riga"><label>Grandezza icone: <b id="vCol"></b></label><input type="range" id="inCol" min="50" max="200" step="4"></div>
     <div class="riga"><label>Arrotondamento: <b id="vRag"></b></label><input type="range" id="inRag" min="0" max="36" step="2"></div>
     <div class="riga"><label>Apri le app dentro questa app<div class="nota-p">Spento = si aprono in una nuova scheda.</div></label>
       <label class="toggle"><input type="checkbox" id="inDentro"><span></span></label></div>
 
     <h3>Le app</h3>
+    <button class="btn primario" id="apriNuova" style="width:100%">＋ Aggiungi app (link)</button>
+    <div id="nuovaApp" class="schedaApp" style="display:none;--c:#ff7b29">
+      <div class="campi">
+        <input type="text" id="nuNome" maxlength="30" placeholder="Nome dell'app (es. Ritmi)">
+        <input type="url" id="nuUrl" placeholder="Link (es. https://rhk93.github.io/...)" autocapitalize="off" autocorrect="off" spellcheck="false">
+      </div>
+      <div class="riga" style="margin-top:10px"><label>Colore</label><input type="color" id="nuColore" value="#ff7b29"></div>
+      <div class="nota-p">Icona:</div>
+      <div class="galleria aperta" id="nuIcone"></div>
+      <div class="azioni" style="justify-content:flex-end">
+        <button class="btn" id="nuAnnulla">Annulla</button>
+        <button class="btn primario" id="nuSalva">Aggiungi</button>
+      </div>
+    </div>
     <div id="elencoApp"></div>
 
     <h3>Salva / ripristina</h3>
@@ -450,12 +476,12 @@ function tile(icona, colore, cls, stile){
 
 const PREDEFINITE = {
   titolo: 'Classe chitarra', nome: 'Ignazio Paolicelli', scT:1, scN:0.5, scS:1, scA:1, stileIcone:'allegra', logo:false,
-  chitarra:true, chitarraPos:'banner', chitarraOp:0.55, rimosse:[], v3:true, v4:true, v5:true,
+  chitarra:true, chitarraPos:'banner', chitarraOp:0.55, rimosse:[], v3:true, v4:true, v5:true, v6:true,
   sottotitolo: 'Le app della classe, in un solo posto',
   piede: 'Copyright © Ignazio Paolicelli',
   colori: { bg1:'#2b1a10', bg2:'#0b0705', card:'#1a110b', testo:'#f4e9d6', accento:'#c9a45c' },
   font: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif",
-  colonne: 2, grandezza: 120, raggio: 14, altezza: 1.2, live: false, dentro: true,
+  colonne: 2, grandezza: 84, raggio: 14, altezza: 1.2, live: false, dentro: true,
   app: [
     { id:'metronomo', nome:'Metronomo', icona:'metronomo', colore:'#ff7b29', url:'https://rhk93.github.io/Metronomoweb/', descr:'Tieni il tempo mentre suoni', visibile:true },
     { id:'accordi',   nome:'Accordi',   icona:'accordi', colore:'#1fa2ff', url:'https://rhk93.github.io/ACCORDI-web/', descr:'Gli schemi di tutti gli accordi', visibile:true },
@@ -504,21 +530,23 @@ function sistema(o){
     c.v3 = true;
   }
   c.stileIcone='allegra';
+  if(!c.v6){ c.grandezza = PREDEFINITE.grandezza; c.v6 = true; }
   // testi fissi: sempre quelli originali
   ['titolo','nome','sottotitolo','piede'].forEach(k=>{ c[k]=PREDEFINITE[k]; });
   c.live = false;
-  c.app = c.app.filter(a=>PREDEFINITE.app.some(p=>p.id===a.id));
-  c.app.forEach(a=>{ const p=PREDEFINITE.app.find(p=>p.id===a.id); a.nome=p.nome; a.descr=p.descr; a.url=p.url; });
+  c.app = c.app.filter(a=>a.mia || PREDEFINITE.app.some(p=>p.id===a.id));
+  c.app.forEach(a=>{ const p=PREDEFINITE.app.find(p=>p.id===a.id); if(p){ a.nome=p.nome; a.descr=p.descr; a.url=p.url; } });
   if(!c.v5){ c.font = PREDEFINITE.font; c.v5=true; }
   if(!c.v4){ // riquadri allegri e più piccoli
     const vivaci = {"#ff7a3d": "#ff7b29", "#2f8cf0": "#1fa2ff", "#3cbf5c": "#2ed15f", "#a35be8": "#a45cff", "#ffb31f": "#ffb000", "#1fc2b0": "#ff4fa3"};
     c.app.forEach(a=>{ if(vivaci[a.colore]) a.colore = vivaci[a.colore]; });
     c.stileIcone='allegra';
+  if(!c.v6){ c.grandezza = PREDEFINITE.grandezza; c.v6 = true; }
   // testi fissi: sempre quelli originali
   ['titolo','nome','sottotitolo','piede'].forEach(k=>{ c[k]=PREDEFINITE[k]; });
   c.live = false;
-  c.app = c.app.filter(a=>PREDEFINITE.app.some(p=>p.id===a.id));
-  c.app.forEach(a=>{ const p=PREDEFINITE.app.find(p=>p.id===a.id); a.nome=p.nome; a.descr=p.descr; a.url=p.url; }); if(c.grandezza>=160) c.grandezza=120;
+  c.app = c.app.filter(a=>a.mia || PREDEFINITE.app.some(p=>p.id===a.id));
+  c.app.forEach(a=>{ const p=PREDEFINITE.app.find(p=>p.id===a.id); if(p){ a.nome=p.nome; a.descr=p.descr; a.url=p.url; } }); if(c.grandezza>=160) c.grandezza=120;
     c.v4 = true;
   }
   c.app.forEach(a=>{ if(!a.icona){ a.icona = ICONE_DEF[a.id] || 'nota'; } delete a.emoji; });
@@ -563,16 +591,8 @@ function disegnaHome(){
   vis.forEach(a=>{
     const b = document.createElement('button');
     b.className = 'app'; b.style.setProperty('--colApp', a.colore);
-    b.innerHTML = `
-      <div class="anteprima${cfg.live?' live':''}">
-        <div class="segnaposto">${tile(a.icona,a.colore)}</div>
-        ${cfg.live ? `<iframe loading="lazy" tabindex="-1" aria-hidden="true" scrolling="no" src="${esc(a.url)}"></iframe>` : ''}
-        <div class="velo"></div>
-      </div>
-      <div class="info">
-        <div class="nome">${tile(a.icona,a.colore)}<span>${esc(a.nome)}</span></div>
-        ${a.descr ? `<div class="descr">${esc(a.descr)}</div>` : ''}
-      </div>`;
+    b.innerHTML = `<span class="iconaHome">${tile(a.icona,a.colore,'allegra')}</span><span class="nomeHome">${esc(a.nome)}</span>`;
+    b.setAttribute('aria-label', a.nome);
     b.dataset.id = a.id;
     b.onclick = () => { if(document.body.classList.contains('ordina') || b._premuto) return; apriApp(a); };
     attivaTrascina(b);
@@ -719,8 +739,8 @@ $('inChitOp').oninput = e=>{ cfg.chitarraOp=+e.target.value; $('vChit').textCont
 });
 $('inFont').onchange = e=>{ cfg.font=e.target.value; salva(); applicaStile(); };
 $('inCol').oninput = e=>{ cfg.grandezza=+e.target.value; $('vCol').textContent=cfg.grandezza+' px'; salva(); applicaStile(); };
-function zoom(d){ cfg.grandezza=Math.max(90,Math.min(420,cfg.grandezza+d)); salva(); applicaStile(); avviso('Grandezza riquadri: '+cfg.grandezza+' px'); }
-$('zMeno').onclick=()=>zoom(-20); $('zPiu').onclick=()=>zoom(20);
+function zoom(d){ cfg.grandezza=Math.max(50,Math.min(200,cfg.grandezza+d)); salva(); applicaStile(); avviso('Grandezza icone: '+cfg.grandezza+' px'); }
+$('zMeno').onclick=()=>zoom(-12); $('zPiu').onclick=()=>zoom(12);
 $('inRag').oninput = e=>{ cfg.raggio=+e.target.value; $('vRag').textContent=cfg.raggio; salva(); applicaStile(); };
 $('inDentro').onchange = e=>{ cfg.dentro=e.target.checked; salva(); };
 
@@ -733,7 +753,7 @@ function disegnaElencoApp(){
     d.innerHTML = `
       <div class="testa">
         <button class="sceltaIcona" aria-label="Cambia icona">${tile(a.icona,a.colore)}</button>
-        <div class="nomeApp">${esc(a.nome)}</div>
+        ${a.mia ? `<input type="text" class="nomeApp" value="${esc(a.nome)}" data-k="nome" maxlength="30" aria-label="Nome">` : `<div class="nomeApp">${esc(a.nome)}</div>`}
         <input type="color" value="${esc(a.colore)}" data-k="colore" aria-label="Colore">
       </div>
       <div class="galleria">
@@ -744,14 +764,16 @@ function disegnaElencoApp(){
         <button class="btn piccolo" data-az="su" ${i===0?'disabled':''}>▲</button>
         <button class="btn piccolo" data-az="giu" ${i===cfg.app.length-1?'disabled':''}>▼</button>
         <button class="btn piccolo" data-az="vis">${a.visibile?'👁 Visibile':'🚫 Nascosta'}</button>
-      </div>`;
+        ${a.mia ? `<button class="btn piccolo pericolo" data-az="del">🗑 Elimina</button>` : ''}
+      </div>
+      ${a.mia ? `<div class="campi"><input type="url" value="${esc(a.url)}" data-k="url" placeholder="https://..." autocapitalize="off" spellcheck="false"></div>` : ''}`;
     d.querySelectorAll('[data-k]').forEach(inp=>{
       inp.oninput = ()=>{
         a[inp.dataset.k] = inp.value;
         if(inp.dataset.k==='colore'){ d.style.setProperty('--c',a.colore); d.querySelectorAll('.tile').forEach(t=>t.style.setProperty('--colApp',a.colore)); }
         salva();
       };
-      inp.onchange = ()=>disegnaHome();
+      inp.onchange = ()=>{ if(inp.dataset.k==='url'){ a.url=sistemaLink(inp.value); inp.value=a.url; salva(); } disegnaHome(); };
     });
     d.querySelector('.sceltaIcona').onclick = ()=>d.querySelector('.galleria').classList.toggle('aperta');
     d.querySelectorAll('[data-ic]').forEach(btn=>{
@@ -767,6 +789,10 @@ function disegnaElencoApp(){
         if(az==='vis'){ a.visibile=!a.visibile; }
         if(az==='del'){
           if(btn.dataset.conf!=='1'){ btn.dataset.conf='1'; btn.textContent='Sicuro? Tocca ancora'; return; }
+          cfg.app.splice(i,1); avviso('App eliminata');
+        }
+        if(az==='del'){
+          if(btn.dataset.conf!=='1'){ btn.dataset.conf='1'; btn.textContent='Sicuro? Tocca ancora'; return; }
           (cfg.rimosse=cfg.rimosse||[]).push(a.id); cfg.app.splice(i,1); avviso('App eliminata');
         }
         salva(); disegnaElencoApp(); disegnaHome();
@@ -775,6 +801,30 @@ function disegnaElencoApp(){
     box.appendChild(d);
   });
 }
+
+// Aggiungi una nuova app (link)
+function sistemaLink(u){ u=(u||'').trim(); if(u && !/^https?:\/\//i.test(u)) u='https://'+u; return u; }
+let nuIcona='nota';
+function disegnaNuIcone(){
+  const col=$('nuColore').value;
+  $('nuIcone').innerHTML = Object.keys(ICONE).map(k=>`<button data-ni="${k}" class="${nuIcona===k?'sel':''}" aria-label="${k}">${tile(k,col)}</button>`).join('');
+  $('nuIcone').querySelectorAll('[data-ni]').forEach(b=>b.onclick=()=>{ nuIcona=b.dataset.ni; disegnaNuIcone(); });
+}
+$('apriNuova').onclick = ()=>{
+  $('nuNome').value=''; $('nuUrl').value=''; nuIcona='nota';
+  $('nuovaApp').style.display='block'; $('apriNuova').style.display='none'; disegnaNuIcone(); $('nuNome').focus();
+};
+$('nuColore').oninput = e=>{ $('nuovaApp').style.setProperty('--c',e.target.value); disegnaNuIcone(); };
+$('nuAnnulla').onclick = ()=>{ $('nuovaApp').style.display='none'; $('apriNuova').style.display=''; };
+$('nuSalva').onclick = ()=>{
+  const nome=$('nuNome').value.trim(), url=sistemaLink($('nuUrl').value);
+  if(!nome){ avviso("Scrivi il nome dell'app"); $('nuNome').focus(); return; }
+  if(!/^https?:\/\/[^\s\/]+\.[^\s]+/i.test(url)){ avviso('Scrivi un link valido'); $('nuUrl').focus(); return; }
+  cfg.app.push({ id:'mia'+Date.now(), mia:true, nome, url, descr:'', icona:nuIcona, colore:$('nuColore').value, visibile:true });
+  salva(); disegnaElencoApp(); disegnaHome();
+  $('nuovaApp').style.display='none'; $('apriNuova').style.display='';
+  avviso('App "'+nome+'" aggiunta ✓');
+};
 
 // Esporta / importa / reset
 $('esporta').onclick = async ()=>{
