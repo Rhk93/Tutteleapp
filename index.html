@@ -586,6 +586,7 @@ function disegnaHome(){
     b.dataset.id = a.id;
     b.onclick = () => { if(document.body.classList.contains('ordina') || b._premuto) return; apriApp(a); };
     attivaTrascina(b);
+    b.addEventListener('pointerenter', e=>{ if(e.pointerType==='mouse' && !document.body.classList.contains('ordina')) suonaClick(); });
     g.appendChild(b);
   });
   aggiornaScale();
@@ -801,6 +802,7 @@ function suonaClick(forza){
 }
 const SEL_CLICK = 'button, a, .tema, select, input[type=checkbox], input[type=color], [role=button], label.toggle';
 document.addEventListener('pointerdown', e=>{ if(e.target.closest && e.target.closest(SEL_CLICK)) suonaClick(); }, true);
+['pointerdown','keydown'].forEach(ev=>document.addEventListener(ev, ()=>{ try{ actx = actx || new (window.AudioContext||window.webkitAudioContext)(); if(actx.state==='suspended') actx.resume(); }catch(e){} }, {once:true, capture:true}));
 
 /* ---------- Click anche nelle app aperte qui dentro ---------- */
 function clickNellApp(){
