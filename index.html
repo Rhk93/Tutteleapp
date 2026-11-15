@@ -367,9 +367,6 @@ footer{text-align:center;opacity:.7;font-size:.95rem;padding:14px 0 26px;letter-
       <label class="toggle"><input type="checkbox" id="inClick"><span></span></label></div>
     <div class="riga"><label>Volume click: <b id="vClick"></b></label><input type="range" id="inClickVol" min="0.1" max="1" step="0.05"></div>
 
-    <h3>Tema nelle app</h3>
-    <div class="riga"><label>Usa gli stessi colori nelle app<div class="nota-p">Vale per le app aperte qui dentro: lo sfondo prende i colori del tema scelto.</div></label>
-      <label class="toggle"><input type="checkbox" id="inTemaApp"><span></span></label></div>
 
     <h3>Salva / ripristina</h3>
     <div class="nota-p">Le modifiche si salvano da sole su questo dispositivo. Per portarle su un altro dispositivo copia il codice e incollalo lì.</div>
@@ -464,7 +461,7 @@ const PREDEFINITE = {
   piede: 'Copyright © Ignazio Paolicelli',
   colori: { bg1:'#4fe3d0', bg2:'#1b74e4', card:'#155bb5', testo:'#ffffff', accento:'#ffd84d' },
   font: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif",
-  colonne: 2, grandezza: 84, raggio: 14, altezza: 1.2, live: false, dentro: true, click:true, clickVol:0.6, temaApp:true,
+  colonne: 2, grandezza: 84, raggio: 14, altezza: 1.2, live: false, dentro: true, click:true, clickVol:0.6,
   app: [
     { id:'metronomo', nome:'Metronomo', icona:'metronomo', colore:'#ff7b29', url:'https://rhk93.github.io/Metronomoweb/', descr:'Tieni il tempo mentre suoni', visibile:true },
     { id:'accordi',   nome:'Accordi',   icona:'accordi', colore:'#1fa2ff', url:'https://rhk93.github.io/ACCORDI-web/', descr:'Gli schemi di tutti gli accordi', visibile:true },
@@ -520,7 +517,7 @@ function sistema(o){
   c.app = c.app.filter(a=>a.mia || PREDEFINITE.app.some(p=>p.id===a.id));
   c.app.forEach(a=>{ const p=PREDEFINITE.app.find(p=>p.id===a.id); if(p){ a.nome=p.nome; a.descr=p.descr; a.url=p.url; } });
   c.font = PREDEFINITE.font; // sempre carattere Apple
-  if(typeof c.click!=='boolean') c.click=true; if(typeof c.clickVol!=='number') c.clickVol=0.6; if(typeof c.temaApp!=='boolean') c.temaApp=true;
+  if(typeof c.click!=='boolean') c.click=true; if(typeof c.clickVol!=='number') c.clickVol=0.6;
   if(!c.v9){ c.colori = Object.assign({}, PREDEFINITE.colori); c.v9 = true; } // tema iniziale: Mare
   if(!c.v8){ c.scN = PREDEFINITE.scN; c.v8 = true; }
   if(!c.v4){ // riquadri allegri e più piccoli
@@ -545,8 +542,7 @@ function salva(){
   const t = JSON.stringify(cfg);
   try{ localStorage.setItem(CHIAVE, t); }catch(e){}
   try{ sessionStorage.setItem(CHIAVE, t); }catch(e){}
-  // tema condiviso con le altre app del sito (rhk93.github.io)
-  try{ localStorage.setItem('rhk93_tema', JSON.stringify(Object.assign({font:cfg.font}, cfg.colori))); }catch(e){}
+  try{ localStorage.removeItem('rhk93_tema'); }catch(e){}
 }
 const $ = id => document.getElementById(id);
 function avviso(t){ const a=$('avviso'); a.textContent=t; a.classList.add('vedi'); clearTimeout(a._t); a._t=setTimeout(()=>a.classList.remove('vedi'),2000); }
@@ -554,7 +550,6 @@ function esc(s){ return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&
 
 /* ---------- Applica stile ---------- */
 function applicaStile(){
-  if(typeof temaNellApp==='function') try{ temaNellApp(); }catch(e){}
   const r = document.documentElement.style, c = cfg.colori;
   r.setProperty('--bg1',c.bg1); r.setProperty('--bg2',c.bg2); r.setProperty('--card',c.card);
   r.setProperty('--testo',c.testo); r.setProperty('--accento',c.accento);
@@ -674,7 +669,7 @@ function chiudiApp(daStoria){
   appAperta = null;
   if(!daStoria && location.hash) history.back();
 }
-$('frameApp').addEventListener('load',()=>{ $('caricamento').style.display='none'; temaNellApp(); });
+$('frameApp').addEventListener('load',()=>{ $('caricamento').style.display='none'; clickNellApp(); });
 $('indietro').onclick = ()=>chiudiApp(false);
 $('ricarica').onclick = ()=>{ if(appAperta){ $('caricamento').style.display='block'; $('frameApp').src='about:blank'; setTimeout(()=>$('frameApp').src=appAperta.url,50);} };
 window.addEventListener('popstate',()=>{
@@ -699,7 +694,7 @@ function riempiPannello(){
   $('inRag').value = cfg.raggio; $('vRag').textContent = cfg.raggio;
   disegnaSceltaSfondi(); $('inChitPos').value = cfg.chitarraPos;
   $('inChitOp').value = cfg.chitarraOp; $('vChit').textContent = Math.round(cfg.chitarraOp*100)+'%'; $('inDentro').checked = cfg.dentro;
-  $('inClick').checked = cfg.click; $('inClickVol').value = cfg.clickVol; $('vClick').textContent = Math.round(cfg.clickVol*100)+'%'; $('inTemaApp').checked = cfg.temaApp;
+  $('inClick').checked = cfg.click; $('inClickVol').value = cfg.clickVol; $('vClick').textContent = Math.round(cfg.clickVol*100)+'%';
   disegnaElencoApp();
 }
 
@@ -772,7 +767,6 @@ $('inDentro').onchange = e=>{ cfg.dentro=e.target.checked; salva(); };
 $('inClick').onchange = e=>{ cfg.click=e.target.checked; salva(); if(cfg.click) suonaClick(true); };
 $('inClickVol').oninput = e=>{ cfg.clickVol=+e.target.value; $('vClick').textContent=Math.round(cfg.clickVol*100)+'%'; salva(); };
 $('inClickVol').onchange = ()=>suonaClick(true);
-$('inTemaApp').onchange = e=>{ cfg.temaApp=e.target.checked; salva(); temaNellApp(); };
 
 /* ---------- Click leggero (volume massimo basso, non invadente) ---------- */
 let actx=null, ultimoClick=0;
@@ -805,19 +799,11 @@ function suonaClick(forza){
 const SEL_CLICK = 'button, a, .tema, select, input[type=checkbox], input[type=color], [role=button], label.toggle';
 document.addEventListener('pointerdown', e=>{ if(e.target.closest && e.target.closest(SEL_CLICK)) suonaClick(); }, true);
 
-/* ---------- Tema anche dentro le app (stesso sito rhk93.github.io) ---------- */
-function temaNellApp(){
+/* ---------- Click anche nelle app aperte qui dentro ---------- */
+function clickNellApp(){
   const fr=$('frameApp'); let d=null;
   try{ d=fr.contentDocument; }catch(e){ return; }
-  const src=fr.getAttribute('src')||''; if(!src || src==='about:blank' || !d || !d.documentElement) return;
-  let st=d.getElementById('temaClasseChitarra');
-  if(!cfg.temaApp){ if(st) st.remove(); return; }
-  const c=cfg.colori;
-  if(!st){ st=d.createElement('style'); st.id='temaClasseChitarra'; (d.head||d.documentElement).appendChild(st); }
-  st.textContent = `:root{--bg:${c.bg2};--bg1:${c.bg1};--bg2:${c.bg2};--sfondo:${c.bg2};--accent:${c.accento};--accento:${c.accento};--primary:${c.accento};--primario:${c.accento};--card:${c.card};}
-html,body{background:linear-gradient(160deg,${c.bg1},${c.bg2}) fixed !important;}`;
-  try{ const m=d.querySelector('meta[name=theme-color]'); if(m) m.content=c.bg1; }catch(e){}
-  // il click anche nelle app aperte qui dentro
+  const src=fr.getAttribute('src')||''; if(!src || src==='about:blank' || !d) return;
   if(!d._clickClasse){ d._clickClasse=true; d.addEventListener('pointerdown', e=>{ if(e.target.closest && e.target.closest(SEL_CLICK)) suonaClick(); }, true); }
 }
 
