@@ -96,6 +96,25 @@ main{max-width:1100px;margin:0 auto;padding:8px 14px 30px}
 .zoom button{width:44px;height:44px;border-radius:50%;font-size:1.5rem;line-height:1;color:var(--accento);
   background:rgba(0,0,0,.3);backdrop-filter:blur(6px);border:1px solid color-mix(in srgb,var(--accento) 50%,transparent)}
 .zoom button:active{transform:scale(.9)}
+.zoom .pillLink{width:auto;padding:0 14px;border-radius:22px;font-size:.95rem;font-weight:700;font-family:var(--font)}
+#pannelloLink{position:fixed;inset:0;z-index:61;display:none}
+#pannelloLink.aperto{display:block}
+#pannelloLink .sfondo{position:absolute;inset:0;background:rgba(0,0,0,.5)}
+#pannelloLink .scheda{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(520px,94vw);max-height:86vh;overflow-y:auto;
+  background:#fff;color:#1d1d24;border-radius:22px;padding:18px 16px 18px;font-family:var(--font);box-shadow:0 20px 50px rgba(0,0,0,.45)}
+#pannelloLink .testaLink{display:flex;justify-content:space-between;align-items:center;gap:10px}
+#pannelloLink h2{font-size:1.25rem;letter-spacing:-.01em}
+#pannelloLink .chiudi{background:#eee;color:#333}
+#pannelloLink .nota-p{opacity:.7}
+.brano{margin-top:14px}
+.brano h3{font-size:.95rem;margin:0 0 6px;color:#1b74e4;text-transform:none;letter-spacing:0}
+.rigaLink{display:flex;align-items:center;gap:8px;background:#f3f5f9;border-radius:12px;padding:8px 8px 8px 12px;margin:6px 0}
+.rigaLink .et{flex:1;min-width:0;font-weight:600;font-size:.92rem}
+.rigaLink .et small{display:block;font-weight:400;opacity:.55;font-size:.72rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rigaLink button,.rigaLink a{border:none;border-radius:10px;padding:8px 12px;font-weight:700;font-size:.85rem;text-decoration:none}
+.rigaLink .copia{background:#1b74e4;color:#fff}
+.rigaLink .copia.ok{background:#2ed15f}
+.rigaLink a{background:#e3e8f0;color:#1d1d24}
 .zoom button{display:flex;align-items:center;justify-content:center}
 #barraOrdina{display:none;position:fixed;left:50%;transform:translateX(-50%);bottom:calc(18px + env(safe-area-inset-bottom));z-index:40;
   background:#fff;color:#2b1a3a;border-radius:30px;padding:8px 8px 8px 18px;gap:12px;align-items:center;
@@ -286,7 +305,7 @@ footer{text-align:center;opacity:.7;font-size:.95rem;padding:14px 0 26px;letter-
   <h1><span id="titolo"></span><span id="nomeTit"></span></h1>
   <div class="fregio"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"><ellipse cx="25" cy="47" rx="8" ry="6" transform="rotate(-22 25 47)" fill="currentColor" stroke="none"/><path d="M32 45 V9 Q38 20 48 22" stroke-width="4"/></svg></div>
   <p id="sottotitolo"></p>
-  <div class="zoom"><button id="zMeno" aria-label="Icone più piccole">−</button><button id="zPiu" aria-label="Icone più grandi">+</button><button id="zOrdina" aria-label="Riordina le app" title="Riordina le app"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16M3 8l4-4 4 4M17 20V4M13 16l4 4 4-4"/></svg></button></div>
+  <div class="zoom"><button id="zMeno" aria-label="Icone più piccole">−</button><button id="zPiu" aria-label="Icone più grandi">+</button><button id="zLink" class="pillLink" aria-label="Link degli spartiti">🔗 Link</button><button id="zOrdina" aria-label="Riordina le app" title="Riordina le app"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16M3 8l4-4 4 4M17 20V4M13 16l4 4 4-4"/></svg></button></div>
   <div id="barraOrdina"><span>Trascina le app per spostarle</span><button id="fineOrdina">Fatto ✓</button></div>
   <button class="btnImpost" id="apriImpost" aria-label="Personalizza"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
 </header>
@@ -382,6 +401,15 @@ footer{text-align:center;opacity:.7;font-size:.95rem;padding:14px 0 26px;letter-
   </div>
 </div>
 
+<div id="pannelloLink" role="dialog" aria-label="Link degli spartiti">
+  <div class="sfondo" id="sfondoLink"></div>
+  <div class="scheda">
+    <div class="testaLink"><h2>Link degli spartiti</h2><button class="chiudi" id="chiudiLink" aria-label="Chiudi">✕</button></div>
+    <p class="nota-p" id="fonteLink">Tocca <b>Copia</b> e poi incolla il link nell'app Spartiti.</p>
+    <div id="elencoLink"><div class="nota-p">Carico i link…</div></div>
+    <button class="btn primario" id="apriSpartiti" style="width:100%;margin-top:14px">Apri l'app Spartiti</button>
+  </div>
+</div>
 <div id="avviso"></div>
 
 <script>
@@ -597,6 +625,51 @@ function disegnaHome(){
   });
   aggiornaScale();
 }
+
+/* ---------- Link degli spartiti (da I miei Brani) ---------- */
+const URL_LINKS = 'https://rhk93.github.io/Archivio-Canzoni-video-e-Foto-/links.txt';
+const LINKS_SCORTA = "// LINK FISSI DEI BRANI – modificati dall'app (modalità docente)\n\n# 1 Rudolph renna dal naso rosso\nspartito: Spartito | https://mega.nz/file/p8kFyBpY#lwbBeGOtUPHx4970NRYaHtqSMvGVQqyRBVeuKzPCJYg\nvideo: Chitarra 1 | https://mega.nz/file/xotBwYDL#DrlCebPlifNNyo5fBtFtIfJ5NhpG4kRQ1Iq3w3Y11xM\nvideo: Chitarra 2 | https://mega.nz/file/hlNDgQiC#n8cxcjDYQ6RuDuz-2XVnY48Z7FiEDqbSKcqmt0y3Ai4\n\n# 2 Il Grinch – Welcome Christmas\nvideo: Chitarra 2 | https://mega.nz/file/BhUkjLQb#WinuX_03jfD7vgOtU7vlk2_Ai2Gf06rv9w6kUNeynLI\nvideo: Chitarra 1 | https://mega.nz/file/9ld3jawI#5PrjR2XOnkWf6IwJNVh-FCRsTrVLBFn8oa9PutJBNQQ\nspartito: Spartito 1 e 2 | https://mega.nz/file/xo1TnATQ#XJGKvpGd65gE2KQLOe3j9-Bd61IVBH-DQj7lT3JjdC0\n\n# 3 A la nanita nana\nspartito: Spartito | https://mega.nz/file/ZhtSVaCK#ejWAP6N-aU-kMmqSRL5thyE2tqq53yivT-EJbCTj6dw\nvideo: Chitarra 1 | https://mega.nz/file/N8cm3TgR#E4wfgyzhFrh8fHMCxbDkpRgjX9sRI1KJqqGSc2FD_5U\nvideo: Chitarra 2 | https://mega.nz/file/wgEwQYLD#PRw6Uogf7dNTdAP2YN2PeWf0pFEvtvJygv2tWF9EDTg\n\n# 4 Polar Express – When Christmas comes to town\nspartito: Spartito - Chitarra 1 | https://mega.nz/file/Zp1imTSR#lVuY7nlZcUCYcsBfW5bw1f96ZD3jelOn4ECz_MnKY68\nvideo: Chitarra 1 | https://mega.nz/file/5xEhHSKD#NcPDpCbmxe1_6nbh_AqMV2BUbgBgvoIxdkRNwaa-6Z4\nspartito: Spartito - Chitarra 2 | https://mega.nz/file/4t9lBbja#x4W2qU950tMOpyKdZGjuIBnC7z0NmhgC_Hjkuc355Hc\n\n# 5 A Christmas Carol (Bocelli) – God Bless Us Everyone\nspartito: Spartito - Chitarra 1 | https://mega.nz/file/4kk0yAhZ#RQOHU6RRukemdlmb2vkRYTMCDJ3Xm3MI4Hk2fGH3Ua4\nspartito: Spartito - Chitarra 2 | https://mega.nz/file/ltNFDC6L#85vgWtNGqFF61AFeia9bHwE_KgpwMpEOlBscFKkTuXw\nvideo: Chitarra 2 | https://mega.nz/file/Rt92jZ4L#zoqyR3Cqmy17-m8vaX5CD80GjcxzudjsiyLsyIeBIss\nvideo: Chitarra 1 | https://mega.nz/file/cx9WhDiA#maOOwj0nKrPrm4b-_G9QTtnLuiqE5cuQYpip98DLuvg\n\n# 6 Home Alone\nspartito: Spartito - Chitarra 1 | https://mega.nz/file/1wMnxJrC#Zigl7WRB9J3iSYcIQF9Ou1REzkYIImQ3aXQyKQolqts\nspartito: Spartito - Chitarra 2 | https://mega.nz/file/ZssVQDaY#vypXgpo3FHWn21Vh5522ULrwHwqA9sckenWKpWF6_wI\n\n# 7 Frozen – Let It Go\n";
+function leggiSpartiti(testo){
+  const brani=[]; let cur=null;
+  testo.split(/\r?\n/).forEach(r=>{
+    r=r.trim();
+    if(r.startsWith('#')){ cur={ nome:r.replace(/^#\s*/,'').replace(/^\d+\s*/,''), link:[] }; brani.push(cur); return; }
+    const m=r.match(/^spartito\s*:\s*(.*?)\s*\|\s*(https?:\/\/\S+)/i);
+    if(m && cur) cur.link.push({ etichetta:m[1]||'Spartito', url:m[2] });
+  });
+  return brani.filter(b=>b.link.length);
+}
+async function copiaTesto(t){
+  try{ await navigator.clipboard.writeText(t); return true; }catch(e){}
+  try{ const a=document.createElement('textarea'); a.value=t; a.style.position='fixed'; a.style.opacity='0'; document.body.appendChild(a); a.select(); const ok=document.execCommand('copy'); a.remove(); return ok; }catch(e){ return false; }
+}
+function disegnaLink(brani, fonte){
+  const box=$('elencoLink');
+  if(!brani.length){ box.innerHTML='<div class="nota-p">Nessuno spartito trovato.</div>'; return; }
+  box.innerHTML = brani.map((b,i)=>`<div class="brano"><h3>${esc(b.nome)}</h3>${b.link.map((l,j)=>`
+    <div class="rigaLink"><div class="et">${esc(l.etichetta)}<small>${esc(l.url)}</small></div>
+    <button class="copia" data-u="${esc(l.url)}">Copia</button><a href="${esc(l.url)}" target="_blank" rel="noopener">Apri</a></div>`).join('')}</div>`).join('');
+  box.querySelectorAll('.copia').forEach(b=>b.onclick=async()=>{
+    const ok=await copiaTesto(b.dataset.u);
+    if(ok){ b.textContent='Copiato ✓'; b.classList.add('ok'); avviso('Link copiato: incollalo nell\'app Spartiti'); setTimeout(()=>{b.textContent='Copia';b.classList.remove('ok');},2000); }
+    else { avviso('Tieni premuto il link per copiarlo'); }
+  });
+  $('fonteLink').innerHTML = 'Tocca <b>Copia</b> e poi incolla il link nell\'app Spartiti.' + (fonte==='scorta' ? ' <br><small>(Elenco salvato: si aggiorna quando c\'è connessione.)</small>' : '');
+}
+async function apriLink(){
+  $('pannelloLink').classList.add('aperto'); history.pushState({l:1},'','#link');
+  disegnaLink(leggiSpartiti(LINKS_SCORTA),'scorta');
+  try{
+    const r = await fetch(URL_LINKS+'?t='+Date.now(), {cache:'no-store'});
+    if(r.ok){ const t=await r.text(); disegnaLink(leggiSpartiti(t),'online'); }
+  }catch(e){}
+}
+function chiudiLink(daStoria){ if(!$('pannelloLink').classList.contains('aperto')) return; $('pannelloLink').classList.remove('aperto'); if(!daStoria && location.hash) history.back(); }
+$('zLink').onclick = apriLink;
+$('chiudiLink').onclick = ()=>chiudiLink(false);
+$('sfondoLink').onclick = ()=>chiudiLink(false);
+$('apriSpartiti').onclick = ()=>{ const a=cfg.app.find(x=>x.id==='spartiti'); chiudiLink(false); if(a) setTimeout(()=>apriApp(a),150); };
+window.addEventListener('popstate',()=>{ if($('pannelloLink').classList.contains('aperto')) chiudiLink(true); });
 
 /* ---------- Riordino: tieni premuto o tasto ⇅, poi trascina ---------- */
 function entraOrdina(){ document.body.classList.add('ordina'); avviso('Trascina le app nella posizione che vuoi'); }
