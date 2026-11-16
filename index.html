@@ -96,6 +96,10 @@ main{max-width:1100px;margin:0 auto;padding:8px 14px 30px}
 .zoom button{width:44px;height:44px;border-radius:50%;font-size:1.5rem;line-height:1;color:var(--accento);
   background:rgba(0,0,0,.3);backdrop-filter:blur(6px);border:1px solid color-mix(in srgb,var(--accento) 50%,transparent)}
 .zoom button:active{transform:scale(.9)}
+.comandi{position:relative;z-index:1;display:flex;justify-content:center;padding:6px 14px 4px}
+.comandi .zoom{position:static;display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.comandi .btnImpost{position:static}
+
 .zoom .pillLink{width:auto;padding:0 14px;border-radius:22px;font-size:.95rem;font-weight:700;font-family:var(--font)}
 #pannelloLink{position:fixed;inset:0;z-index:61;display:none}
 #pannelloLink.aperto{display:block}
@@ -305,14 +309,15 @@ footer{text-align:center;opacity:.7;font-size:.95rem;padding:14px 0 26px;letter-
   <h1><span id="titolo"></span><span id="nomeTit"></span></h1>
   <div class="fregio"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"><ellipse cx="25" cy="47" rx="8" ry="6" transform="rotate(-22 25 47)" fill="currentColor" stroke="none"/><path d="M32 45 V9 Q38 20 48 22" stroke-width="4"/></svg></div>
   <p id="sottotitolo"></p>
-  <div class="zoom"><button id="zMeno" aria-label="Icone più piccole">−</button><button id="zPiu" aria-label="Icone più grandi">+</button><button id="zLink" class="pillLink" aria-label="Link degli spartiti">🔗 Link</button><button id="zOrdina" aria-label="Riordina le app" title="Riordina le app"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16M3 8l4-4 4 4M17 20V4M13 16l4 4 4-4"/></svg></button></div>
   <div id="barraOrdina"><span>Trascina le app per spostarle</span><button id="fineOrdina">Fatto ✓</button></div>
-  <button class="btnImpost" id="apriImpost" aria-label="Personalizza"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
 </header>
 
 <main>
   <div class="griglia" id="griglia"></div>
 </main>
+<div class="comandi">
+  <div class="zoom"><button id="zMeno" aria-label="Icone più piccole">−</button><button id="zPiu" aria-label="Icone più grandi">+</button><button id="zLink" class="pillLink" aria-label="Link degli spartiti">🔗 Link</button><button id="zOrdina" aria-label="Riordina le app" title="Riordina le app"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16M3 8l4-4 4 4M17 20V4M13 16l4 4 4-4"/></svg></button><button class="btnImpost" id="apriImpost" aria-label="Personalizza"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></div>
+</div>
 <footer id="piede">Copyright © Ignazio Paolicelli</footer>
 
 <!-- Visore: apre l'app dentro questa app -->
