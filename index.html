@@ -97,6 +97,22 @@ header p{opacity:.85;margin-top:4px;font-size:calc(1.05rem * var(--scS,1));font-
 }
 .btnImpost:active{transform:scale(.92)}
 main{max-width:1100px;margin:0 auto;padding:8px 14px 30px}
+.linkTop{display:flex;justify-content:center;margin:2px 0 14px}
+#zLink{font:700 1.05rem var(--font);padding:11px 26px;border:none;border-radius:999px;cursor:pointer;color:#2b1a3a;background:linear-gradient(180deg,#ffe066,#ffc21a);box-shadow:0 4px 14px rgba(0,0,0,.25),inset 0 -3px 0 rgba(0,0,0,.12);transition:transform .15s}
+#zLink:active{transform:scale(.96)}
+.cartellaGen{background:rgba(255,210,63,.14);border:1.5px solid rgba(255,210,63,.6);border-radius:16px;padding:12px;margin:4px 0 12px}
+.cgTit{font-weight:700;margin-bottom:6px}
+.cgUrl{font-size:.78rem;word-break:break-all;opacity:.85;user-select:all;margin-bottom:10px}
+.cgAz{display:flex;gap:8px}.cgAz .btn{flex:1}
+.app[data-id="suona"] .iconaHome .tile{box-shadow:0 0 0 3px #ffd23f,0 0 22px 6px rgba(255,210,63,.75),0 6px 16px rgba(0,0,0,.3) !important;animation:suonaBrilla 2.2s ease-in-out infinite}
+.app[data-id="suona"] .nomeHome{font-weight:800 !important;color:#ffe14d !important}
+@keyframes suonaBrilla{0%,100%{box-shadow:0 0 0 3px #ffd23f,0 0 16px 4px rgba(255,210,63,.55),0 6px 16px rgba(0,0,0,.3)}50%{box-shadow:0 0 0 3px #fff3a6,0 0 28px 10px rgba(255,210,63,.9),0 6px 16px rgba(0,0,0,.3)}}
+.titSez svg{width:24px;height:24px;display:block}
+.sezioni{display:flex;flex-direction:column;gap:14px;max-width:980px;margin:0 auto}
+.sezione{display:flex;flex-direction:column;align-items:center}
+.titSez{display:inline-flex;align-items:center;gap:7px;margin:0 0 8px;padding:5px 15px;border-radius:999px;font-size:15px;font-weight:700;letter-spacing:.3px;color:#fff;background:rgba(0,0,0,.28);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);box-shadow:0 2px 8px rgba(0,0,0,.15);text-shadow:0 1px 2px rgba(0,0,0,.35)}
+.titSez span{font-size:16px}
+.sezione .griglia{width:100%}
 .griglia{display:grid;grid-template-columns:repeat(auto-fill,min(var(--larg,160px),100%));gap:14px;justify-content:center}
 .app{container-type:inline-size}
 .info .nome{font-size:calc(clamp(.8rem,10cqw,1.35rem) * var(--scA,1)) !important}
@@ -349,10 +365,11 @@ footer{text-align:center;opacity:.7;font-size:.95rem;padding:14px 0 26px;letter-
 </header>
 
 <main>
-  <div class="griglia" id="griglia"></div>
+  <div class="linkTop"><button id="zLink" aria-label="Link brani">🔗 Link brani</button></div>
+  <div class="sezioni" id="griglia"></div>
 </main>
 <div class="comandi">
-  <div class="zoom"><button id="zMeno" aria-label="Icone più piccole">−</button><button id="zPiu" aria-label="Icone più grandi">+</button><button id="zLink" class="pillLink" aria-label="Link brani">🔗 Link brani</button><button id="zOrdina" aria-label="Riordina le app" title="Riordina le app"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16M3 8l4-4 4 4M17 20V4M13 16l4 4 4-4"/></svg></button><button class="btnImpost" id="apriImpost" aria-label="Personalizza"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></div>
+  <div class="zoom"><button id="zMeno" aria-label="Icone più piccole">−</button><button id="zPiu" aria-label="Icone più grandi">+</button><button id="zOrdina" aria-label="Riordina le app" title="Riordina le app"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16M3 8l4-4 4 4M17 20V4M13 16l4 4 4-4"/></svg></button><button class="btnImpost" id="apriImpost" aria-label="Personalizza"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></div>
 </div>
 <footer id="piede">Copyright © Ignazio Paolicelli</footer>
 
@@ -447,6 +464,11 @@ footer{text-align:center;opacity:.7;font-size:.95rem;padding:14px 0 26px;letter-
   <div class="sfondo" id="sfondoLink"></div>
   <div class="scheda">
     <div class="testaLink"><h2>Link brani</h2><button class="chiudi" id="chiudiLink" aria-label="Chiudi">✕</button></div>
+    <div class="cartellaGen">
+      <div class="cgTit">📂 Cartella di tutti i brani (Mega)</div>
+      <div class="cgUrl" id="cgUrl">https://mega.nz/folder/dhEgFKqD#Xew7qSzl0a2_wfVJJBz3hg</div>
+      <div class="cgAz"><button class="btn" id="cgCopia">📋 Copia</button><button class="btn primario" id="cgSuona">▶ Apri in SUONA!</button></div>
+    </div>
     <p class="nota-p" id="fonteLink">Tocca <b>Apri in Spartiti</b>: lo spartito si apre direttamente nell'app Spartiti.</p>
     <div id="elencoLink"><div class="nota-p">Carico i link…</div></div>
     <button class="btn primario" id="apriSpartiti" style="width:100%;margin-top:14px">Apri l'app Spartiti</button>
@@ -473,6 +495,7 @@ const CHIAVE = 'classeChitarraPaolicelli_v2';
 /* Icone disegnate (64x64, a tratto) */
 const ICONE = {
   solfeggio:'<ellipse cx="22" cy="46" rx="9" ry="7" transform="rotate(-20 22 46)"/><path d="M30 43 V10 Q34 20 44 24"/><circle cx="40" cy="45" r="3.5" fill="currentColor" stroke="none"/>',
+  suona:'<rect x="12" y="8" width="36" height="48" rx="4"/><path d="M18 18 H42 M18 25 H42 M18 32 H42"/><path d="M34 38 L50 46 L34 54 Z"/>',
   suonare:'<rect x="5" y="18" width="54" height="28" rx="4"/><path d="M20 18 V46 M31 18 V46 M41 18 V46 M5 25 H59 M5 32 H59 M5 39 H59"/><circle cx="26" cy="28" r="3" fill="currentColor" stroke="none"/>',
   parti:'<rect x="30" y="4" width="4" height="24"/><path d="M32 28 C40 28 42 34 39 39 C44 42 46 46 45 51 C44 57 38 60 32 60 C26 60 20 57 19 51 C18 46 20 42 25 39 C22 34 24 28 32 28 Z"/><circle cx="32" cy="40" r="3.5"/>',
   battuta:'<circle cx="32" cy="32" r="24"/><path d="M32 32 V8 M32 32 H56 M32 32 L15 49"/>',
@@ -503,6 +526,7 @@ const ICONE = {
 /* Icone colorate (stile allegro) */
 const ICONE_COLORE = {
   solfeggio:'<ellipse cx="20" cy="48" rx="10" ry="7.6" transform="rotate(-20 20 48)" fill="#ffe14d" stroke="#2b1a3a" stroke-width="2.6"/><path d="M29 45 V10" stroke="#2b1a3a" stroke-width="3.4" stroke-linecap="round"/><path d="M29 10 Q31 20 42 24 Q36 18 33 12" fill="#2b1a3a"/><circle cx="38" cy="46" r="4.2" fill="#ff3d6e" stroke="#2b1a3a" stroke-width="1.8"><animate attributeName="r" values="4.2;5;4.2" dur="1.6s" repeatCount="indefinite"/></circle><circle cx="16.5" cy="47.5" r="1.7" fill="#2b1a3a"/><circle cx="22.5" cy="45.5" r="1.7" fill="#2b1a3a"/><path d="M17 52 Q20 54 23 51" stroke="#2b1a3a" stroke-width="1.5" fill="none" stroke-linecap="round"/><circle cx="51" cy="22" r="9" fill="#fff" stroke="#2b1a3a" stroke-width="2.2"/><path d="M51 22 V13 A9 9 0 0 1 60 22 Z" fill="#2ec4ff"/><path d="M51 22 H60 A9 9 0 0 1 51 31 Z" fill="#7bdc3f"/><path d="M8 12 l1.3 3 3 1.3 -3 1.3 -1.3 3 -1.3 -3 -3 -1.3 3 -1.3 z" fill="#fff"/>',
+  suona:'<circle cx="32" cy="32" r="27" fill="none" stroke="#ffe14d" stroke-width="2.5" opacity=".9"><animate attributeName="r" values="22;30;22" dur="1.8s" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0;.9" dur="1.8s" repeatCount="indefinite"/></circle><path d="M32 4 l3.5 8 8.5-4.5 -2 9.3 9.4-.4 -6 7.3 8.3 4.3 -8.8 3 5.7 7.6 -9.3-1.3 .5 9.5 -7.3-6 -2.5 9.2 -2.5-9.2 -7.3 6 .5-9.5 -9.3 1.3 5.7-7.6 -8.8-3 8.3-4.3 -6-7.3 9.4.4 -2-9.3 8.5 4.5z" fill="#ffd23f" stroke="#2b1a3a" stroke-width="2.2" stroke-linejoin="round"/><circle cx="32" cy="32" r="15" fill="#ff2d55" stroke="#2b1a3a" stroke-width="2.4"/><path d="M27 23.5 L42 32 L27 40.5 Z" fill="#fff" stroke="#2b1a3a" stroke-width="2.2" stroke-linejoin="round"/><path d="M50 50 q4 -4 0 -8 M54 53 q7 -7 0 -14" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"><animate attributeName="opacity" values="1;.3;1" dur="1s" repeatCount="indefinite"/></path><ellipse cx="11" cy="54" rx="4.6" ry="3.4" transform="rotate(-20 11 54)" fill="#2ec4ff" stroke="#2b1a3a" stroke-width="1.6"/><path d="M15.2 53 V42 Q17 45.5 20.5 46.5" stroke="#2b1a3a" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M8 10 l1.2 2.8 2.8 1.2 -2.8 1.2 -1.2 2.8 -1.2 -2.8 -2.8 -1.2 2.8 -1.2 z" fill="#fff"/>',
   suonare:'<rect x="4" y="18" width="56" height="28" rx="5" fill="#c98a4a" stroke="#2b1a3a" stroke-width="2.6"/><rect x="5.3" y="19.3" width="5" height="25.4" fill="#fff4dc"/><path d="M20 19.5 V44.5" stroke="#e8e8ee" stroke-width="1.6"/><path d="M31 19.5 V44.5" stroke="#e8e8ee" stroke-width="1.6"/><path d="M41 19.5 V44.5" stroke="#e8e8ee" stroke-width="1.6"/><path d="M50 19.5 V44.5" stroke="#e8e8ee" stroke-width="1.6"/><path d="M5 23 H59" stroke="#fff6e0" stroke-width="0.9"/><path d="M5 27.5 H59" stroke="#fff6e0" stroke-width="1"/><path d="M5 32 H59" stroke="#fff6e0" stroke-width="1.2"/><path d="M5 36.5 H59" stroke="#fff6e0" stroke-width="1.4"/><path d="M5 41 H59" stroke="#fff6e0" stroke-width="1.7"/><circle cx="25.5" cy="27.5" r="4" fill="#ff3d6e" stroke="#2b1a3a" stroke-width="1.6"/><circle cx="36" cy="36.5" r="4" fill="#2ec4ff" stroke="#2b1a3a" stroke-width="1.6"/><circle cx="45.5" cy="23" r="4" fill="#ffe14d" stroke="#2b1a3a" stroke-width="1.6"/><circle cx="24.8" cy="26.8" r="1.1" fill="#2b1a3a"/><circle cx="26.8" cy="26.8" r="1.1" fill="#2b1a3a"/><ellipse cx="14" cy="57" rx="5" ry="3.8" transform="rotate(-20 14 57)" fill="#7bdc3f" stroke="#2b1a3a" stroke-width="1.6"/><path d="M18.5 56 V45 Q20.5 49 24 50" stroke="#2b1a3a" stroke-width="2.2" fill="none" stroke-linecap="round"/><ellipse cx="50" cy="11" rx="5" ry="3.8" transform="rotate(-20 50 11)" fill="#ff7ac6" stroke="#2b1a3a" stroke-width="1.6"/><path d="M54.5 10 V0 Q56.5 4 60 5" stroke="#2b1a3a" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M40 54 l1.3 3 3 1.3 -3 1.3 -1.3 3 -1.3 -3 -3 -1.3 3 -1.3 z" fill="#fff"/>',
   parti:'<path d="M30 3 H34 L35 9 H29 Z" fill="#8a4f26" stroke="#2b1a3a" stroke-width="2" stroke-linejoin="round"/><rect x="30.3" y="9" width="3.4" height="22" fill="#8a4f26" stroke="#2b1a3a" stroke-width="1.8"/><path d="M32 26 C38 26 41 29 40.5 33 C40 36 38 37 39 40 C40.5 43 45 45 44.5 51 C44 57 38 60 32 60 C26 60 20 57 19.5 51 C19 45 23.5 43 25 40 C26 37 24 36 23.5 33 C23 29 26 26 32 26 Z" fill="#ffc35a" stroke="#2b1a3a" stroke-width="2.4" stroke-linejoin="round"/><circle cx="32" cy="38" r="4" fill="#2b1a3a"/><rect x="27" y="51" width="10" height="3" rx="1.2" fill="#8a4f26" stroke="#2b1a3a" stroke-width="1.2"/><path d="M31 9 V52 M33 9 V52" stroke="#fff" stroke-width=".6"/><circle cx="49" cy="22" r="8" fill="#e8fbff" fill-opacity=".85" stroke="#2b1a3a" stroke-width="2.6"/><path d="M54.5 27.5 L60 33" stroke="#2b1a3a" stroke-width="3.4" stroke-linecap="round"/><path d="M37 47 L52 47" stroke="#fff" stroke-width="1.6"/><circle cx="37" cy="47" r="1.6" fill="#fff"/><rect x="51" y="43.5" width="10" height="7" rx="2" fill="#fff" stroke="#2b1a3a" stroke-width="1.4"/><path d="M24 17 L10 17" stroke="#fff" stroke-width="1.6"/><circle cx="29.5" cy="17" r="1.6" fill="#fff"/><rect x="3" y="13.5" width="10" height="7" rx="2" fill="#fff" stroke="#2b1a3a" stroke-width="1.4"/>',
   battuta:'<circle cx="32" cy="34" r="24" fill="#fff" stroke="#2b1a3a" stroke-width="2.8"/><path d="M32 34 V10 A24 24 0 0 1 56 34 Z" fill="#ff3d6e" stroke="#2b1a3a" stroke-width="2.2" stroke-linejoin="round"/><path d="M32 34 H56 A24 24 0 0 1 32 58 Z" fill="#ffd23f" stroke="#2b1a3a" stroke-width="2.2" stroke-linejoin="round"/><path d="M32 34 V58 A24 24 0 0 1 14.6 50.6 Z" fill="#2ec4ff" stroke="#2b1a3a" stroke-width="2.2" stroke-linejoin="round"/><circle cx="21" cy="30" r="2.4" fill="#2b1a3a"/><circle cx="27" cy="23" r="2.4" fill="#2b1a3a"/><circle cx="21.8" cy="29.2" r=".9" fill="#fff"/><circle cx="27.8" cy="22.2" r=".9" fill="#fff"/><path d="M17 37 Q22 41 27 37" stroke="#2b1a3a" stroke-width="1.8" fill="none" stroke-linecap="round"/><ellipse cx="49" cy="7" rx="4.4" ry="3.3" transform="rotate(-20 49 7)" fill="#7bdc3f" stroke="#2b1a3a" stroke-width="1.5"/><path d="M53 6 V-4 Q55 0 58 1" stroke="#2b1a3a" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M8 8 l1.3 3 3 1.3 -3 1.3 -1.3 3 -1.3 -3 -3 -1.3 3 -1.3 z" fill="#fff"/>',
@@ -516,7 +540,7 @@ const ICONE_COLORE = {
   bersaglio:'<circle cx="32" cy="33" r="25" fill="#fff" stroke="#2b1a3a" stroke-width="2.8"/><circle cx="32" cy="33" r="19.5" fill="#ff3d6e"/><circle cx="32" cy="33" r="14" fill="#fff"/><circle cx="32" cy="33" r="8.5" fill="#2ec4ff"/><path d="M36.5 39 V20 Q39 26 46 27.5" stroke="#2b1a3a" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="30.5" cy="40.5" rx="7" ry="5.3" transform="rotate(-20 30.5 40.5)" fill="#ffe14d" stroke="#2b1a3a" stroke-width="2.4"/><circle cx="28.3" cy="39.9" r="1.5" fill="#2b1a3a"/><circle cx="32.3" cy="38.9" r="1.5" fill="#2b1a3a"/><path d="M56 4.5 L57.4 7.7 L60.5 9 L57.4 10.3 L56 13.5 L54.6 10.3 L51.5 9 L54.6 7.7 Z" fill="#ffe14d"/><path d="M8 52.5 L9.1 55.0 L11.5 56 L9.1 57.0 L8 59.5 L7.0 57.0 L4.5 56 L7.0 55.0 Z" fill="#fff"/>',
   spartito:'<path d="M13 5 H40 L51 16 V59 H13 Z" fill="#fff" stroke="#2b1a3a" stroke-width="2.8" stroke-linejoin="round"/><path d="M40 5 V16 H51 Z" fill="#ffd6ec" stroke="#2b1a3a" stroke-width="2.2" stroke-linejoin="round"/><g stroke="#b9b0c9" stroke-width="1.6"><path d="M18 22 H46 M18 27.5 H46 M18 33 H46 M18 38.5 H46 M18 44 H46"/></g><path d="M30.5 41 V23 L42.5 20 V35" stroke="#2b1a3a" stroke-width="2.8" fill="none" stroke-linejoin="round"/><ellipse cx="26" cy="42" rx="5.6" ry="4.2" transform="rotate(-20 26 42)" fill="#ff5fa2" stroke="#2b1a3a" stroke-width="2"/><ellipse cx="38" cy="36" rx="5.6" ry="4.2" transform="rotate(-20 38 36)" fill="#2ec4ff" stroke="#2b1a3a" stroke-width="2"/><path d="M27 52 Q32 56 37 52" stroke="#2b1a3a" stroke-width="2.2" fill="none" stroke-linecap="round"/><ellipse cx="22" cy="52" rx="2.6" ry="1.7" fill="#ff7aa8" opacity=".8"/><ellipse cx="42" cy="52" rx="2.6" ry="1.7" fill="#ff7aa8" opacity=".8"/><path d="M57 44 L58.2 46.8 L61 48 L58.2 49.2 L57 52 L55.8 49.2 L53 48 L55.8 46.8 Z" fill="#ffe14d"/>'
 };
-const ICONE_DEF = { solfeggio:'solfeggio', suonare:'suonare', parti:'parti', battuta:'battuta', brani:'brani', trascrittore:'trascrittore', accordatore:'accordatore', metronomo:'metronomo', accordi:'accordi', aula:'aula', appnote:'pentagramma', caccia:'bersaglio', spartiti:'spartito' };
+const ICONE_DEF = { suona:'suona', solfeggio:'solfeggio', suonare:'suonare', parti:'parti', battuta:'battuta', brani:'brani', trascrittore:'trascrittore', accordatore:'accordatore', metronomo:'metronomo', accordi:'accordi', aula:'aula', appnote:'pentagramma', caccia:'bersaglio', spartiti:'spartito' };
 const TITOLO_VECCHIO = '🎸 Classe chitarra Paolicelli Ignazio';
 function svgIcona(k){ return `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONE[k]}</svg>`; }
 function svgColore(k){ return `<svg class="colorata" viewBox="0 0 64 64" aria-hidden="true">${ICONE_COLORE[k]}</svg>`; }
@@ -563,12 +587,13 @@ const PREDEFINITE = {
     { id:'brani', nome:'I miei Brani', icona:'brani', colore:'#1fc2b0', url:'https://rhk93.github.io/Archivio-Canzoni-video-e-Foto-/', descr:'Video, foto e audio dei brani', visibile:true },
     { id:'appnote',   nome:'AppNOTE',   icona:'pentagramma', colore:'#a45cff', url:'https://rhk93.github.io/AppNOTE/', descr:'Pentagramma sonoro: tocca e ascolta', visibile:true },
     { id:'parti', nome:'Parti chitarra Classica', icona:'parti', colore:'#ff8a3d', url:'https://rhk93.github.io/Parti-chitarra/', descr:'Scopri le parti della chitarra classica', visibile:true },
-    { id:'caccia',    nome:'Gioco Note', icona:'bersaglio', colore:'#ffb000', url:'https://rhk93.github.io/CacciaAlleNote/', descr:'Caccia alle Note: allenati a riconoscerle', visibile:true },
-    { id:'battuta', nome:'Gioco riempi la battuta', icona:'battuta', colore:'#5b6cff', url:'https://rhk93.github.io/RiempiBattuteNOTE/', descr:'Riempi le battute con note e pause', visibile:true },
-    { id:'spartiti',  nome:'Spartiti',  icona:'spartito', colore:'#ff4fa3', url:'https://rhk93.github.io/SpartitiChitarra/', descr:'Tocca una nota dello spartito e la vedi sulla chitarra', visibile:true },
+    { id:'accordi',   nome:'Accordi',   icona:'accordi', colore:'#1fa2ff', url:'https://rhk93.github.io/ACCORDI-web/', descr:'Gli schemi di tutti gli accordi', visibile:true },
+    { id:'suona', nome:'SUONA!', icona:'suona', colore:'#ff2d55', url:'https://rhk93.github.io/SUONA-/', descr:'Apri gli spartiti MuseScore e ascoltali', visibile:true },
     { id:'trascrittore', nome:'Spartito dal vivo', icona:'trascrittore', colore:'#ff3d6e', url:'https://rhk93.github.io/Trascrittore-su-pentagramma/', descr:'Suona e vedi le note sul pentagramma', visibile:true },
     { id:'suonare', nome:'Divertiti a suonare', icona:'suonare', colore:'#ff6b6b', url:'https://rhk93.github.io/Prova-a-suonare-/', descr:'Suona le note sul manico della chitarra', visibile:true },
-    { id:'accordi',   nome:'Accordi',   icona:'accordi', colore:'#1fa2ff', url:'https://rhk93.github.io/ACCORDI-web/', descr:'Gli schemi di tutti gli accordi', visibile:true }
+    { id:'spartiti',  nome:'Spartiti',  icona:'spartito', colore:'#ff4fa3', url:'https://rhk93.github.io/SpartitiChitarra/', descr:'Tocca una nota dello spartito e la vedi sulla chitarra', visibile:true },
+    { id:'caccia',    nome:'Gioco Note', icona:'bersaglio', colore:'#ffb000', url:'https://rhk93.github.io/CacciaAlleNote/', descr:'Caccia alle Note: allenati a riconoscerle', visibile:true },
+    { id:'battuta', nome:'Gioco riempi la battuta', icona:'battuta', colore:'#5b6cff', url:'https://rhk93.github.io/RiempiBattuteNOTE/', descr:'Riempi le battute con note e pause', visibile:true }
   ]
 };
 
@@ -626,6 +651,8 @@ function sistema(o){
     c.colori = Object.assign({}, PREDEFINITE.colori); c.neve = true; c.v10 = true;
   }
   if(typeof c.neve!=='boolean') c.neve=true;
+  if(!c.v17){ const k=c.app.findIndex(a=>a.id==='suona'), t=c.app.findIndex(a=>a.id==='trascrittore'); if(k>t && t>=0){ const [x]=c.app.splice(k,1); c.app.splice(t,0,x); } c.app.forEach(a=>{ if(a.id==='suona') a.colore='#ff2d55'; }); c.v17=true; }
+  if(!c.v16){ const O=['accordatore','metronomo','brani','appnote','parti','accordi','suona','trascrittore','suonare','spartiti','caccia','battuta']; c.app.sort((a,b)=>{ const ia=O.indexOf(a.id), ib=O.indexOf(b.id); return (ia<0?99:ia)-(ib<0?99:ib); }); c.v16=true; }
   if(!c.v15){ if(c.sfondo==='natale' || !c.v11) c.colori=Object.assign({},PREDEFINITE.colori); c.v15=true; }
   if(!c.v14){ if(c.sfondo==='natale' || !c.v11) c.colori=Object.assign({},PREDEFINITE.colori); c.v14=true; }
   if(!c.v13){ if(c.sfondo==='natale' || !c.v11) c.colori=Object.assign({},PREDEFINITE.colori); c.v13=true; }
@@ -684,11 +711,25 @@ function applicaStile(){
 }
 
 /* ---------- Home ---------- */
+const SEZIONI=[
+  {nome:'Utili', em:'🧰', ids:['accordatore','metronomo']},
+  {nome:'Imparare', em:'📚', ids:['appnote','parti','accordi']},
+  {nome:'Suonare', em:'<svg viewBox="0 0 24 24"><g transform="rotate(35 12 12)"><rect x="10.9" y="1" width="2.2" height="11" rx=".6" fill="#6b3d1f"/><rect x="10.2" y=".2" width="3.6" height="3.4" rx=".8" fill="#4a2a14"/><path d="M12 9.5c-2.6 0-3.6 1.6-3.1 3.2.3 1-1.8 1.8-1.8 4.4 0 2.8 2.3 4.6 4.9 4.6s4.9-1.8 4.9-4.6c0-2.6-2.1-3.4-1.8-4.4.5-1.6-.5-3.2-3.1-3.2z" fill="#f2c27a" stroke="#8a5424" stroke-width=".8"/><circle cx="12" cy="14.6" r="1.5" fill="#3a220f"/><rect x="10.3" y="18.3" width="3.4" height=".9" rx=".3" fill="#4a2a14"/></g></svg>', ids:['suona','trascrittore','suonare','spartiti']},
+  {nome:'Giochi', em:'🎮', ids:['caccia','battuta']},
+  {nome:'Cartelle', em:'📁', ids:['brani']}
+];
 function disegnaHome(){
   const g = $('griglia'); g.innerHTML = '';
   const vis = cfg.app.filter(a=>a.visibile);
   if(!vis.length){ g.innerHTML = '<div class="vuoto">Nessuna app visibile. Premi ⚙️ per aggiungerne.</div>'; return; }
-  vis.forEach(a=>{
+  const noti = SEZIONI.flatMap(s=>s.ids);
+  const gruppi = SEZIONI.map(s=>({nome:s.nome, em:s.em, app:vis.filter(a=>s.ids.includes(a.id))}));
+  gruppi.push({nome:'Altre app', em:'⭐', app:vis.filter(a=>!noti.includes(a.id))});
+  gruppi.filter(s=>s.app.length).forEach(s=>{
+    const sez=document.createElement('section'); sez.className='sezione';
+    sez.innerHTML=`<h2 class="titSez"><span>${s.em}</span>${esc(s.nome)}</h2>`;
+    const gr=document.createElement('div'); gr.className='griglia'; sez.appendChild(gr); g.appendChild(sez);
+    s.app.forEach(a=>{
     const b = document.createElement('button');
     b.className = 'app'; b.style.setProperty('--colApp', a.colore);
     b.innerHTML = `<span class="iconaHome">${tile(a.icona,a.colore,'allegra')}</span><span class="nomeHome">${esc(a.nome)}</span>`;
@@ -697,7 +738,8 @@ function disegnaHome(){
     b.onclick = () => { if(document.body.classList.contains('ordina') || b._premuto) return; b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); setTimeout(()=>{ b.classList.remove('pop'); apriApp(a); }, 260); };
     attivaTrascina(b);
     b.addEventListener('pointerenter', e=>{ if(e.pointerType==='mouse' && !document.body.classList.contains('ordina')) suonaClick(); });
-    g.appendChild(b);
+    gr.appendChild(b);
+    });
   });
   aggiornaScale();
 }
@@ -841,6 +883,15 @@ function apriInSpartiti(link){
   chiudiLink(false);
   setTimeout(()=>apriApp(Object.assign({},a,{url, urlAperto:url})),180);
 }
+const CARTELLA_GEN='https://mega.nz/folder/dhEgFKqD#Xew7qSzl0a2_wfVJJBz3hg';
+$('cgCopia').onclick=async()=>{ avviso(await copiaTesto(CARTELLA_GEN) ? 'Link copiato ✓' : 'Non riesco a copiare: tieni premuto sul link'); };
+$('cgSuona').onclick=async()=>{
+  await copiaTesto(CARTELLA_GEN);
+  const a=cfg.app.find(x=>x.id==='suona') || PREDEFINITE.app.find(x=>x.id==='suona');
+  const url=a.url+(a.url.includes('?')?'&':'?')+'lista='+encodeURIComponent(CARTELLA_GEN);
+  chiudiLink(false);
+  setTimeout(()=>apriApp(Object.assign({},a,{url, urlAperto:url})),180);
+};
 $('zLink').onclick = apriLink;
 $('chiudiLink').onclick = ()=>chiudiLink(false);
 $('sfondoLink').onclick = ()=>chiudiLink(false);
