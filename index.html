@@ -469,9 +469,9 @@ footer{text-align:center;opacity:.7;font-size:.95rem;padding:14px 0 26px;letter-
       <div class="cgUrl" id="cgUrl">https://mega.nz/folder/dhEgFKqD#Xew7qSzl0a2_wfVJJBz3hg</div>
       <div class="cgAz"><button class="btn" id="cgCopia">📋 Copia</button><button class="btn primario" id="cgSuona">▶ Apri in SUONA!</button></div>
     </div>
-    <p class="nota-p" id="fonteLink">Tocca <b>Apri in Spartiti</b>: lo spartito si apre direttamente nell'app Spartiti.</p>
+    <p class="nota-p" id="fonteLink">Tocca <b>Apri in Spartiti</b>: lo spartito si apre direttamente nell'app Spartiti con posizioni.</p>
     <div id="elencoLink"><div class="nota-p">Carico i link…</div></div>
-    <button class="btn primario" id="apriSpartiti" style="width:100%;margin-top:14px">Apri l'app Spartiti</button>
+    <button class="btn primario" id="apriSpartiti" style="width:100%;margin-top:14px">Apri l'app Spartiti con posizioni</button>
     <div id="boxDocente">
       <button class="btn" id="btnDocente">👩‍🏫 Modalità docente</button>
       <div id="loginDocente" style="display:none">
@@ -591,7 +591,7 @@ const PREDEFINITE = {
     { id:'suona', nome:'SUONA!', icona:'suona', colore:'#ff2d55', url:'https://rhk93.github.io/SUONA-/', descr:'Apri gli spartiti MuseScore e ascoltali', visibile:true },
     { id:'trascrittore', nome:'Spartito dal vivo', icona:'trascrittore', colore:'#ff3d6e', url:'https://rhk93.github.io/Trascrittore-su-pentagramma/', descr:'Suona e vedi le note sul pentagramma', visibile:true },
     { id:'suonare', nome:'Divertiti a suonare', icona:'suonare', colore:'#ff6b6b', url:'https://rhk93.github.io/Prova-a-suonare-/', descr:'Suona le note sul manico della chitarra', visibile:true },
-    { id:'spartiti',  nome:'Spartiti',  icona:'spartito', colore:'#ff4fa3', url:'https://rhk93.github.io/SpartitiChitarra/', descr:'Tocca una nota dello spartito e la vedi sulla chitarra', visibile:true },
+    { id:'spartiti',  nome:'Spartiti con posizioni',  icona:'spartito', colore:'#ff4fa3', url:'https://rhk93.github.io/SpartitiChitarra/', descr:'Tocca una nota dello spartito e la vedi sulla chitarra', visibile:true },
     { id:'caccia',    nome:'Gioco Note', icona:'bersaglio', colore:'#ffb000', url:'https://rhk93.github.io/CacciaAlleNote/', descr:'Caccia alle Note: allenati a riconoscerle', visibile:true },
     { id:'battuta', nome:'Gioco riempi la battuta', icona:'battuta', colore:'#5b6cff', url:'https://rhk93.github.io/RiempiBattuteNOTE/', descr:'Riempi le battute con note e pause', visibile:true }
   ]
@@ -768,7 +768,7 @@ function disegnaLink(brani, fonte){
     <div class="rigaLink"><div class="et">${esc(l.etichetta)}<small>${esc(l.url)}</small></div>
     <button class="copia apriS" data-u="${esc(l.url)}">Apri in Spartiti</button></div>`).join('')}</div>`).join('');
   box.querySelectorAll('.apriS').forEach(b=>b.onclick=()=>apriInSpartiti(b.dataset.u));
-  $('fonteLink').innerHTML = 'Tocca <b>Apri in Spartiti</b>: lo spartito si apre direttamente nell\'app Spartiti.' + (fonte==='scorta' ? ' <br><small>(Elenco salvato: si aggiorna quando c\'è connessione.)</small>' : '');
+  $('fonteLink').innerHTML = 'Tocca <b>Apri in Spartiti</b>: lo spartito si apre direttamente nell\'app Spartiti con posizioni.' + (fonte==='scorta' ? ' <br><small>(Elenco salvato: si aggiorna quando c\'è connessione.)</small>' : '');
 }
 async function apriLink(){
   $('pannelloLink').classList.add('aperto'); history.pushState({l:1},'','#link');
