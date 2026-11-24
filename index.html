@@ -588,10 +588,10 @@ const PREDEFINITE = {
     { id:'appnote',   nome:'AppNOTE',   icona:'pentagramma', colore:'#a45cff', url:'https://rhk93.github.io/AppNOTE/', descr:'Pentagramma sonoro: tocca e ascolta', visibile:true },
     { id:'parti', nome:'Parti chitarra Classica', icona:'parti', colore:'#ff8a3d', url:'https://rhk93.github.io/Parti-chitarra/', descr:'Scopri le parti della chitarra classica', visibile:true },
     { id:'accordi',   nome:'Accordi',   icona:'accordi', colore:'#1fa2ff', url:'https://rhk93.github.io/ACCORDI-web/', descr:'Gli schemi di tutti gli accordi', visibile:true },
-    { id:'suona', nome:'SUONA!', icona:'suona', colore:'#ff2d55', url:'https://rhk93.github.io/SUONA-/', descr:'Apri gli spartiti MuseScore e ascoltali', visibile:true },
-    { id:'trascrittore', nome:'Spartito dal vivo', icona:'trascrittore', colore:'#ff3d6e', url:'https://rhk93.github.io/Trascrittore-su-pentagramma/', descr:'Suona e vedi le note sul pentagramma', visibile:true },
-    { id:'suonare', nome:'Divertiti a suonare', icona:'suonare', colore:'#ff6b6b', url:'https://rhk93.github.io/Prova-a-suonare-/', descr:'Suona le note sul manico della chitarra', visibile:true },
     { id:'spartiti',  nome:'Spartiti con posizioni',  icona:'spartito', colore:'#ff4fa3', url:'https://rhk93.github.io/SpartitiChitarra/', descr:'Tocca una nota dello spartito e la vedi sulla chitarra', visibile:true },
+    { id:'suona', nome:'SUONA!', icona:'suona', colore:'#ff2d55', url:'https://rhk93.github.io/SUONA-/', descr:'Apri gli spartiti MuseScore e ascoltali', visibile:true },
+    { id:'suonare', nome:'Divertiti a suonare', icona:'suonare', colore:'#ff6b6b', url:'https://rhk93.github.io/Prova-a-suonare-/', descr:'Suona le note sul manico della chitarra', visibile:true },
+    { id:'trascrittore', nome:'Spartito dal vivo', icona:'trascrittore', colore:'#ff3d6e', url:'https://rhk93.github.io/Trascrittore-su-pentagramma/', descr:'Suona e vedi le note sul pentagramma', visibile:true },
     { id:'caccia',    nome:'Gioco Note', icona:'bersaglio', colore:'#ffb000', url:'https://rhk93.github.io/CacciaAlleNote/', descr:'Caccia alle Note: allenati a riconoscerle', visibile:true },
     { id:'battuta', nome:'Gioco riempi la battuta', icona:'battuta', colore:'#5b6cff', url:'https://rhk93.github.io/RiempiBattuteNOTE/', descr:'Riempi le battute con note e pause', visibile:true }
   ]
@@ -651,6 +651,7 @@ function sistema(o){
     c.colori = Object.assign({}, PREDEFINITE.colori); c.neve = true; c.v10 = true;
   }
   if(typeof c.neve!=='boolean') c.neve=true;
+  if(!c.v18){ const O=['accordatore','metronomo','brani','appnote','parti','accordi','spartiti','suona','suonare','trascrittore','caccia','battuta']; c.app.sort((a,b)=>{ const ia=O.indexOf(a.id), ib=O.indexOf(b.id); return (ia<0?99:ia)-(ib<0?99:ib); }); c.v18=true; }
   if(!c.v17){ const k=c.app.findIndex(a=>a.id==='suona'), t=c.app.findIndex(a=>a.id==='trascrittore'); if(k>t && t>=0){ const [x]=c.app.splice(k,1); c.app.splice(t,0,x); } c.app.forEach(a=>{ if(a.id==='suona') a.colore='#ff2d55'; }); c.v17=true; }
   if(!c.v16){ const O=['accordatore','metronomo','brani','appnote','parti','accordi','suona','trascrittore','suonare','spartiti','caccia','battuta']; c.app.sort((a,b)=>{ const ia=O.indexOf(a.id), ib=O.indexOf(b.id); return (ia<0?99:ia)-(ib<0?99:ib); }); c.v16=true; }
   if(!c.v15){ if(c.sfondo==='natale' || !c.v11) c.colori=Object.assign({},PREDEFINITE.colori); c.v15=true; }
@@ -714,7 +715,8 @@ function applicaStile(){
 const SEZIONI=[
   {nome:'Utili', em:'🧰', ids:['accordatore','metronomo']},
   {nome:'Imparare', em:'📚', ids:['appnote','parti','accordi']},
-  {nome:'Suonare', em:'<svg viewBox="0 0 24 24"><g transform="rotate(35 12 12)"><rect x="10.9" y="1" width="2.2" height="11" rx=".6" fill="#6b3d1f"/><rect x="10.2" y=".2" width="3.6" height="3.4" rx=".8" fill="#4a2a14"/><path d="M12 9.5c-2.6 0-3.6 1.6-3.1 3.2.3 1-1.8 1.8-1.8 4.4 0 2.8 2.3 4.6 4.9 4.6s4.9-1.8 4.9-4.6c0-2.6-2.1-3.4-1.8-4.4.5-1.6-.5-3.2-3.1-3.2z" fill="#f2c27a" stroke="#8a5424" stroke-width=".8"/><circle cx="12" cy="14.6" r="1.5" fill="#3a220f"/><rect x="10.3" y="18.3" width="3.4" height=".9" rx=".3" fill="#4a2a14"/></g></svg>', ids:['suona','trascrittore','suonare','spartiti']},
+  {nome:'Suonare', em:'<svg viewBox="0 0 24 24"><g transform="rotate(35 12 12)"><rect x="10.9" y="1" width="2.2" height="11" rx=".6" fill="#6b3d1f"/><rect x="10.2" y=".2" width="3.6" height="3.4" rx=".8" fill="#4a2a14"/><path d="M12 9.5c-2.6 0-3.6 1.6-3.1 3.2.3 1-1.8 1.8-1.8 4.4 0 2.8 2.3 4.6 4.9 4.6s4.9-1.8 4.9-4.6c0-2.6-2.1-3.4-1.8-4.4.5-1.6-.5-3.2-3.1-3.2z" fill="#f2c27a" stroke="#8a5424" stroke-width=".8"/><circle cx="12" cy="14.6" r="1.5" fill="#3a220f"/><rect x="10.3" y="18.3" width="3.4" height=".9" rx=".3" fill="#4a2a14"/></g></svg>', ids:['spartiti','suona','suonare']},
+  {nome:'Registrare', em:'🎙️', ids:['trascrittore']},
   {nome:'Giochi', em:'🎮', ids:['caccia','battuta']},
   {nome:'Cartelle', em:'📁', ids:['brani']}
 ];
